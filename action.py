@@ -49,33 +49,6 @@ def move(x,y, character_name, debug=False):
 
 
 
-def fight(character_name, debug=False):
-    """
-
-    :param character_name:
-    :param debug:
-    :return:
-    """
-
-    postfix = 'action/fight'
-    url = f"https://api.artifactsmmo.com/my/{character_name}/{postfix}"
-    headers = {
-        "Authorization": f"Bearer {token}",
-    }
-
-    data = {}
-
-    response = requests.post(url, headers=headers, json=data)
-
-    if debug:
-        print(response.request)
-        print(response.status_code)
-        print(response.json())
-
-    return response
-
-
-
 def deposit_bank(character_name, item_code, item_quantity, debug=False):
     """
 
@@ -138,3 +111,52 @@ def deposit_bank_gold(character_name, item_quantity, debug=False):
 
 
 
+def fight(character_name, debug=False):
+    """
+
+    :param character_name:
+    :param debug:
+    :return:
+    """
+
+    postfix = 'action/fight'
+    url = f"https://api.artifactsmmo.com/my/{character_name}/{postfix}"
+    headers = {
+        "Authorization": f"Bearer {token}",
+    }
+
+    data = {}
+
+    response = requests.post(url, headers=headers, json=data)
+
+    if debug:
+        print(response.request)
+        print(response.status_code)
+        print(response.json())
+
+    return response
+
+
+def gathering(name, debug=False):
+    """
+
+    :param name:
+    :param debug:
+    :return:
+    """
+    postfix = f'/my/{name}/action/gathering'
+    url = f"https://api.artifactsmmo.com{postfix}"
+    headers = {
+        "Authorization": f"Bearer {token}",
+    }
+
+    data = {}
+
+    response = requests.post(url, headers=headers, json=data)
+
+    if debug:
+        print(response.request)
+        print(response.status_code)
+        print(response.json())
+
+    return response

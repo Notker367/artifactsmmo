@@ -7,8 +7,6 @@ from tqdm import tqdm
 from dotenv import load_dotenv
 import os
 
-from works import chicken_farm
-
 # Загрузка переменных из файла .env
 load_dotenv()
 
@@ -46,29 +44,36 @@ async def wait_cooldown_from_response(character_name):
 
 # Персонаж: 'Работа'
 professions = {
-    char_I: 'farm',
-    char_II: 'farm',
-    char_III: 'farm',
-    char_IV: 'farm',
-    char_V: 'farm'
-}
-
-# 'Работа': Функция
-works = {
-    'farm': chicken_farm,
-#    'b': case_b,
-#    'c': case_c
+    char_I:     'farm',
+    char_II:    'farm',
+    char_III:   'farm',
+    char_IV:    'mining',
+    char_V:     'wood'
 }
 
 # Функция по умолчанию для обработки неизвестных работ
-def default_case(value):
+async def default_case(value):
     print(f"Error works case {value} !!!")
+    await asyncio.sleep(30)
 
 # Основная задача для персонажа
 async def task(character_name):
     print(f"Starting task for {character_name}")
-    work_function = works.get(professions.get(character_name), default_case)
-    await work_function(character_name)
+
+    from works import chicken_farm,gathering  # Отложенный импорт
+
+    # 'Работа': Функция
+    works_dict = {
+        'farm'      : (chicken_farm,    False),
+        'mining'    : (gathering,       'copper'),
+        'wood'      : (gathering,       'Ash Tree')
+    }
+
+    work_function,add_param = works_dict.get(professions.get(character_name), default_case)
+    if add_param:
+        await work_function(character_name,target=add_param)
+    else:
+        await work_function(character_name)
     print(f"Finished task for {character_name}")
 
 # Список персонажей
