@@ -20,12 +20,26 @@ char_IV = os.getenv('CHARACTER_FOUR')
 char_V = os.getenv('CHARACTER_FIVE')
 
 
+# Указываем, для каких персонажей отображать прогресс-бар
+show_progress_bars = {
+    char_I: True,
+    char_II: False,
+    char_III: False,
+    char_IV: False,
+    char_V: False
+}
+
 
 async def wait_cooldown_from_response(character_name):
     delay = api.world_info.get_character_info(character_name).json()['data']['cooldown']
 
-    for _ in tqdm(range(delay), desc=f"{character_name} cooldown"):
-        await asyncio.sleep(1)
+    show_progress = show_progress_bars.get(character_name, False)
+
+    if show_progress:
+        for _ in tqdm(range(delay), desc=f"{character_name} cooldown"):
+            await asyncio.sleep(1)
+    else:
+        await asyncio.sleep(delay)
 
 
 async def go_to(x,y, character_name):
