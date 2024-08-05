@@ -10,7 +10,7 @@ token = os.getenv('TOKEN')
 
 
 
-def move(x,y, character_name, debug=False):
+def move(coordinates, character_name, debug=False):
     """
     200-The character has moved successfully.
 
@@ -23,8 +23,7 @@ def move(x,y, character_name, debug=False):
     498-Character not found.
 
     499-Character in cooldown.
-    :param x:
-    :param y:
+    :param coordinates: (x , y)
     :param character_name:
     :param debug:
     :return: status_code
@@ -35,8 +34,8 @@ def move(x,y, character_name, debug=False):
         "Authorization": f"Bearer {token}",
     }
     data = {
-        "x": x,
-        "y": y
+        "x": coordinates[0],
+        "y": coordinates[1]
     }
 
     response = requests.post(url, headers=headers, json=data)
@@ -155,6 +154,38 @@ def gathering(name, debug=False):
     response = requests.post(url, headers=headers, json=data)
 
     if debug:
+        print(response.request)
+        print(response.status_code)
+        print(response.json())
+
+    return response
+
+
+
+def craft(name, item_code, quantity, debug=False):
+    """
+
+    :param quantity: int
+    :param item_code: str
+    :param name: str
+    :param debug: bool
+    :return:
+    """
+    postfix = f'/my/{name}/action/crafting'
+    url = f"https://api.artifactsmmo.com{postfix}"
+    headers = {
+        "Authorization": f"Bearer {token}",
+    }
+
+    data = {
+        "code": item_code,
+        "quantity": quantity
+    }
+
+    response = requests.post(url, headers=headers, json=data)
+
+    if debug:
+        print(name, item_code, quantity, debug)
         print(response.request)
         print(response.status_code)
         print(response.json())

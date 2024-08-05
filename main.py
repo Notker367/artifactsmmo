@@ -19,11 +19,11 @@ char_V = os.getenv('CHARACTER_FIVE')
 
 # Указываем, для каких персонажей отображать прогресс-бар
 show_progress_bars = {
-    char_I: True,
+    char_I: False,
     char_II: False,
     char_III: False,
     char_IV: False,
-    char_V: False
+    char_V: True
 }
 
 # Функция ожидания окончания кулдауна с возможностью отображения прогресс-бара
@@ -66,7 +66,7 @@ async def task(character_name):
     works_dict = {
         'farm'      : (chicken_farm,    False),
         'mining'    : (gathering,       'copper'),
-        'wood'      : (gathering,       'Ash Tree')
+        'wood'      : (gathering,       'ash')
     }
 
     work_function,add_param = works_dict.get(professions.get(character_name), default_case)
