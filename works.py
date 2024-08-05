@@ -30,8 +30,14 @@ async def all_in_bank(character_name):
 
 #Битвы
 #__________________________________________________________________________
-async def chicken_farm(character_name):
-    await go_to((0,1), character_name) # chicken
+monsters = {
+    'chicken'   :   (0,  1),
+    'blue_slime':   (2, -1),
+    'red_slime' :   (1, -1)
+
+}
+async def farm(character_name, target):
+    await go_to(monsters[target], character_name)
 
     response = action.fight(character_name,debug=False)
     if response.status_code == 200:
@@ -52,7 +58,7 @@ async def chicken_farm(character_name):
 #__________________________________________________________________________
 resources = {
     'ash'          : (-1, 0),
-    'copper'            : (2,  0),
+    'copper'       : (2,  0),
 
 }
 
@@ -63,10 +69,10 @@ wood_info = {
 }
 
 bars_info = {
-    'copper'            : 6,
-    'iron'              : 6,
+    'copper'       : 6,
+    'iron'         : 6,
 
-    'craft'         : (1, 5)
+    'craft'        : (1, 5)
 
 }
 
