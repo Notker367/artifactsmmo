@@ -109,6 +109,37 @@ def deposit_bank_gold(character_name, item_quantity, debug=False):
     return response
 
 
+def withdraw_bank(character_name, item_code, item_quantity, debug=True):
+    """
+
+    :param item_code: str item name
+    :param item_quantity: int item quantity
+    :param character_name:
+    :param debug:
+    :return:
+    """
+
+    name = character_name
+    postfix = f'/my/{name}/action/bank/withdraw'
+    url = f"https://api.artifactsmmo.com{postfix}"
+    headers = {
+        "Authorization": f"Bearer {token}",
+    }
+
+    data = {
+        "code": item_code,
+        "quantity": item_quantity
+    }
+
+    response = requests.post(url, headers=headers, json=data)
+
+    if debug:
+        print(response.request)
+        print(response.status_code)
+        print(response.json())
+
+    return response
+
 
 def fight(character_name, debug=False):
     """

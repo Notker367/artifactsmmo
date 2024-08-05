@@ -44,11 +44,11 @@ async def wait_cooldown_from_response(character_name):
 
 # Персонаж: 'Работа'
 professions = {
-    char_I:     'farm_red_slime',
-    char_II:    'farm_blue_slime',
-    char_III:   'farm_blue_slime',
-    char_IV:    'mining',
-    char_V:     'wood'
+    char_I:     'wolf',
+    char_II:    'craft_from_bank',
+    char_III:   'cow',
+    char_IV:    'iron',
+    char_V:     'spruce'
 }
 
 # Функция по умолчанию для обработки неизвестных работ
@@ -60,15 +60,26 @@ async def default_case(value):
 async def task(character_name):
     print(f"Starting task for {character_name}")
 
-    from works import farm,gathering  # Отложенный импорт
+    from works import farm,gathering,craft_from_bank  # Отложенный импорт
 
     # 'Работа': Функция
     works_dict = {
-        'farm_chicken'      : (farm,        'chicken'),
-        'farm_red_slime'    : (farm,        'red_slime'),
-        'farm_blue_slime'   : (farm,        'blue_slime'),
-        'mining'            : (gathering,   'copper'),
-        'wood'              : (gathering,   'ash')
+        'craft_from_bank'   : (craft_from_bank,        'cooked_chicken'),
+
+        'farm_chicken'      : (farm,        'chicken'),         #1
+        'farm_red_slime'    : (farm,        'red_slime'),       #7
+        'farm_blue_slime'   : (farm,        'blue_slime'),      #6
+        'farm_green_slime'  : (farm,        'green_slime'),     #4
+        'yellow_slime'      : (farm,        'yellow_slime'),    #2
+        'cow'               : (farm,        'cow'),             #8
+        'wolf'              : (farm,        'wolf'),            #15
+
+        'copper'            : (gathering,   'copper'),
+        'iron'              : (gathering,   'iron'),
+        'ash'               : (gathering,   'ash'),
+        'gudgeon'           : (gathering,   'gudgeon'),
+        'shrimp'            : (gathering,   'shrimp'),
+        'spruce'            : (gathering,   'spruce')
     }
 
     work_function,add_param = works_dict.get(professions.get(character_name), default_case)
