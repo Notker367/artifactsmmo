@@ -2,7 +2,7 @@ import action
 import info
 from main import wait_cooldown_from_response
 
-
+# Функция перемещения персонажа к указанным координатам
 async def go_to(coordinates, character_name):
     if info.get_position(character_name) == coordinates:
         print(f"{character_name} - already in position now")
@@ -109,7 +109,7 @@ async def go_crafting(character_name, to_item_code):
         postfix_inv = "_ore"
         postfix_craft = ""
         #                         to_item_code = target из def gathering(character_name, target)
-#                           Название в инвентаре           Коэффициент крафта из инфо
+        # Название в инвентаре и коэффициент крафта
         count_in_inv = item_dict.get(to_item_code + postfix_inv, 0)# Название в инвентаре
         craft_coof = bars_info[to_item_code]       # Коэффициент крафта из инфо
 
@@ -119,6 +119,7 @@ async def go_crafting(character_name, to_item_code):
         postfix_craft = "_plank"
         postfix_inv = "_wood"
         #                      to_item_code = target из def gathering(character_name, target)
+        # Название в инвентаре и коэффициент крафта
         count_in_inv = item_dict.get(to_item_code + postfix_inv, 0)# кол-во по Название в инвентаре
         craft_coof = wood_info[to_item_code]       # Коэффициент крафта из инфо
 
