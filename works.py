@@ -63,7 +63,7 @@ wood_info = {
 }
 
 bars_info = {
-    'copper'            : 3,
+    'copper'            : 6,
     'iron'              : 6,
 
     'craft'         : (1, 5)
