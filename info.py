@@ -86,11 +86,9 @@ def get_workshop(workshop_code):
         return
 
     workshops_info = api.world_info.get_all_maps('workshop').json()
-    print('workshop_info = ',workshops_info)
     workshop_dict = { workshop['content']['code'] : (workshop['x'], workshop['y'])
                       for workshop
                       in workshops_info['data'] }
-    print('workshop_dict = ',workshop_dict)
 
     return workshop_dict[workshop_code] if workshop_code != 'all' else workshops_info
 

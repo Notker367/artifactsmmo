@@ -109,7 +109,7 @@ def deposit_bank_gold(character_name, item_quantity, debug=False):
     return response
 
 
-def withdraw_bank(character_name, item_code, item_quantity, debug=True):
+def withdraw_bank(character_name, item_code, item_quantity, debug=False):
     """
 
     :param item_code: str item name

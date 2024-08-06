@@ -35,7 +35,7 @@ async def all_in_bank(character_name):
         await wait_cooldown_from_response(character_name)
 
 
-async def craft_from_bank(character_name, target):
+async def craft_from_bank(character_name, target, need_craft = 999):
     recept, skill  = info.get_recept(target) # {name : quantity}, skill
 
     my_item = info.get_item_dict(character_name)
@@ -45,7 +45,7 @@ async def craft_from_bank(character_name, target):
 
     inv_max = info.get_inventory_max_items(character_name)
 
-    can_craft = 999
+    can_craft = need_craft
 
     for item in recept_name_list:
         in_inv = my_item.get(item, 0)
@@ -72,9 +72,9 @@ async def craft_from_bank(character_name, target):
     await all_in_bank(character_name)
 
     for item, quantity in recept.items():
-        action.withdraw_bank(character_name,item,quantity * can_craft)
+        action.withdraw_bank(character_name, item, quantity * can_craft)
+        await wait_cooldown_from_response(character_name)
 
-    await wait_cooldown_from_response(character_name)
     await go_to(info.get_workshop(skill), character_name) # go workshop
 
     response = action.craft(character_name, target, can_craft)
@@ -105,6 +105,7 @@ monsters = {
     'yellow_slime'  :   (4, -1),
     'cow'           :   (0,  2),
     'wolf'          :   (-2, 1),
+    'mushmush'      :   (5,  3),
 
 }
 async def farm(character_name, target):

@@ -44,11 +44,11 @@ async def wait_cooldown_from_response(character_name):
 
 # Персонаж: 'Работа'
 professions = {
-    char_I:     'wolf',
+    char_I:     'mushmush',
     char_II:    'craft_from_bank',
     char_III:   'cow',
-    char_IV:    'iron',
-    char_V:     'spruce'
+    char_IV:    'farm_red_slime',
+    char_V:     'farm_red_slime'
 }
 
 # Функция по умолчанию для обработки неизвестных работ
@@ -64,7 +64,7 @@ async def task(character_name):
 
     # 'Работа': Функция
     works_dict = {
-        'craft_from_bank'   : (craft_from_bank,        'cooked_chicken'),
+        'craft_from_bank'   : (craft_from_bank,        'fried_eggs'),
 
         'farm_chicken'      : (farm,        'chicken'),         #1
         'farm_red_slime'    : (farm,        'red_slime'),       #7
@@ -72,6 +72,7 @@ async def task(character_name):
         'farm_green_slime'  : (farm,        'green_slime'),     #4
         'yellow_slime'      : (farm,        'yellow_slime'),    #2
         'cow'               : (farm,        'cow'),             #8
+        'mushmush'          : (farm,        'mushmush'),        #10
         'wolf'              : (farm,        'wolf'),            #15
 
         'copper'            : (gathering,   'copper'),
