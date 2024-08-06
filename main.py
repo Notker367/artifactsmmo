@@ -45,10 +45,10 @@ async def wait_cooldown_from_response(character_name):
 # Персонаж: 'Работа'
 professions = {
     char_I:     'mushmush',
-    char_II:    'craft_from_bank',
-    char_III:   'cow',
-    char_IV:    'farm_red_slime',
-    char_V:     'farm_red_slime'
+    char_II:    'shrimp',
+    char_III:   'craft_from_bank',
+    char_IV:    'iron',
+    char_V:     'spruce'
 }
 
 # Функция по умолчанию для обработки неизвестных работ
@@ -64,7 +64,8 @@ async def task(character_name):
 
     # 'Работа': Функция
     works_dict = {
-        'craft_from_bank'   : (craft_from_bank,        'fried_eggs'),
+        'craft_from_bank'   : (craft_from_bank,        'life_amulet'),
+        'life_amulet'        :   5,
 
         'farm_chicken'      : (farm,        'chicken'),         #1
         'farm_red_slime'    : (farm,        'red_slime'),       #7
@@ -73,19 +74,28 @@ async def task(character_name):
         'yellow_slime'      : (farm,        'yellow_slime'),    #2
         'cow'               : (farm,        'cow'),             #8
         'mushmush'          : (farm,        'mushmush'),        #10
+        'flying_serpent'    : (farm,        'flying_serpent'),  #12
         'wolf'              : (farm,        'wolf'),            #15
 
         'copper'            : (gathering,   'copper'),
         'iron'              : (gathering,   'iron'),
+
         'ash'               : (gathering,   'ash'),
+        'spruce'            : (gathering,   'spruce'),
+
         'gudgeon'           : (gathering,   'gudgeon'),
         'shrimp'            : (gathering,   'shrimp'),
-        'spruce'            : (gathering,   'spruce')
+
     }
 
     work_function,add_param = works_dict.get(professions.get(character_name), default_case)
-    if add_param:
+    if work_function == craft_from_bank and add_param in works_dict:
+        need_craft = works_dict.get(add_param)
+        await work_function(character_name, target=add_param, need_craft=need_craft)
+
+    elif add_param:
         await work_function(character_name,target=add_param)
+
     else:
         await work_function(character_name)
     print(f"Finished task for {character_name}")

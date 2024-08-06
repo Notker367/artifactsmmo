@@ -52,7 +52,7 @@ async def craft_from_bank(character_name, target, need_craft = 999):
         in_bank = bank_item.get(item, 0)
         in_recept = recept.get(item, 0)
 
-        have_items_for_craft = in_inv + in_bank // in_recept
+        have_items_for_craft = (in_inv + in_bank) // in_recept
 
         if have_items_for_craft == 0:
             print(f"{character_name} not can craft {target} needed more {item}")
@@ -63,15 +63,16 @@ async def craft_from_bank(character_name, target, need_craft = 999):
 
     need_slots_for_one = 0
 
-    for item, quantity in recept.items():
-        need_slots_for_one += quantity
+    for item, quantity_need in recept.items():
+        need_slots_for_one += quantity_need
 
-    if need_slots_for_one * can_craft > inv_max // need_slots_for_one:
+    if need_slots_for_one * can_craft > inv_max:
         can_craft = inv_max // need_slots_for_one
 
     await all_in_bank(character_name)
 
     for item, quantity in recept.items():
+        print(f'{character_name} me need {quantity * can_craft} {item} from bank')
         action.withdraw_bank(character_name, item, quantity * can_craft)
         await wait_cooldown_from_response(character_name)
 
@@ -106,6 +107,7 @@ monsters = {
     'cow'           :   (0,  2),
     'wolf'          :   (-2, 1),
     'mushmush'      :   (5,  3),
+    'flying_serpent':   (5,  4),
 
 }
 async def farm(character_name, target):
