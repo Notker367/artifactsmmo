@@ -56,6 +56,7 @@ async def craft_from_bank(character_name, target, need_craft = 999):
 
         if have_items_for_craft == 0:
             print(f"{character_name} not can craft {target} needed more {item}")
+            await farm(character_name, target='mushmush')
             return
 
         if have_items_for_craft < can_craft:
@@ -140,6 +141,7 @@ resources = {
     # Рыба
     'gudgeon'      : (4,  2),
     'shrimp'       : (5,  2),
+    'trout'        : (-2, 6),
 }
 
 wood_info = {
@@ -160,6 +162,7 @@ bars_info = {
 fish_info = {
     'gudgeon'      : 1,
     'shrimp'       : 1,
+    'trout'        : 1,
 
     'craft'        : (1, 1)
 }

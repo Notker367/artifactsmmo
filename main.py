@@ -19,9 +19,9 @@ char_V = os.getenv('CHARACTER_FIVE')
 
 # Указываем, для каких персонажей отображать прогресс-бар
 show_progress_bars = {
-    char_I: True,
+    char_I: False,
     char_II: False,
-    char_III: False,
+    char_III: True,
     char_IV: False,
     char_V: False
 }
@@ -42,19 +42,27 @@ async def wait_cooldown_from_response(character_name):
         # Ждем окончания кулдауна без отображения прогресс-бара
         await asyncio.sleep(delay)
 
-# Персонаж: 'Работа'
-professions = {
-    char_I:     'mushmush',
-    char_II:    'shrimp',
-    char_III:   'craft_from_bank',
-    char_IV:    'iron',
-    char_V:     'spruce'
-}
+
 
 # Функция по умолчанию для обработки неизвестных работ
 async def default_case(value):
     print(f"Error works case {value} !!!")
     await asyncio.sleep(30)
+
+def craft_need(count = None):
+    if count is None:
+        count = 50
+    count -= count
+    return count
+
+# Персонаж: 'Работа'
+professions = {
+    char_I:     'wolf',
+    char_II:    'trout',
+    char_III:   'craft_from_bank',
+    char_IV:    'copper',
+    char_V:     'ash'
+}
 
 # Основная задача для персонажа
 async def task(character_name):
@@ -64,8 +72,7 @@ async def task(character_name):
 
     # 'Работа': Функция
     works_dict = {
-        'craft_from_bank'   : (craft_from_bank,        'life_amulet'),
-        'life_amulet'        :   5,
+        'craft_from_bank'   : (craft_from_bank,        'greater_wooden_staff'),
 
         'farm_chicken'      : (farm,        'chicken'),         #1
         'farm_red_slime'    : (farm,        'red_slime'),       #7
@@ -85,12 +92,13 @@ async def task(character_name):
 
         'gudgeon'           : (gathering,   'gudgeon'),
         'shrimp'            : (gathering,   'shrimp'),
+        'trout'             : (gathering,   'trout'),
 
     }
 
     work_function,add_param = works_dict.get(professions.get(character_name), default_case)
     if work_function == craft_from_bank and add_param in works_dict:
-        need_craft = works_dict.get(add_param)
+        need_craft = craft_need()
         await work_function(character_name, target=add_param, need_craft=need_craft)
 
     elif add_param:
