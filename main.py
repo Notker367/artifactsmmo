@@ -102,8 +102,7 @@ async def task(character_name):
         print(f"{character_name} will craft {need_craft} items.")
         await work_function(character_name,
                             target=add_param,
-                            need_craft=need_craft,
-                            recycl=True)
+                            need_craft=need_craft)
 
     elif add_param:
         await work_function(character_name,
