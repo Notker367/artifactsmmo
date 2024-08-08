@@ -222,3 +222,34 @@ def craft(name, item_code, quantity, debug=False):
         print(response.json())
 
     return response
+
+
+def recycl(name, item_code, quantity, debug=False):
+    """
+
+    :param quantity: int
+    :param item_code: str
+    :param name: str
+    :param debug: bool
+    :return:
+    """
+    postfix = f'/my/{name}/action/recycling'
+    url = f"https://api.artifactsmmo.com{postfix}"
+    headers = {
+        "Authorization": f"Bearer {token}",
+    }
+
+    data = {
+        "code": item_code,
+        "quantity": quantity
+    }
+
+    response = requests.post(url, headers=headers, json=data)
+
+    if debug:
+        print(name, item_code, quantity, debug)
+        print(response.request)
+        print(response.status_code)
+        print(response.json())
+
+    return response

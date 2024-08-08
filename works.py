@@ -1,5 +1,6 @@
 import action
 import info
+import main
 from main import wait_cooldown_from_response
 
 # Функция перемещения персонажа к указанным координатам
@@ -24,6 +25,8 @@ async def go_to(coordinates, character_name):
 
 #Экономика
 #__________________________________________________________________________
+current_count = 35
+
 async def all_in_bank(character_name):
     await go_to((4,1), character_name) # bank
 
@@ -34,28 +37,67 @@ async def all_in_bank(character_name):
         print(f"{character_name} deposit {quantity} - {name} in bank")
         await wait_cooldown_from_response(character_name)
 
+def craft_need(count=None, now=False):
+    global current_count
 
-async def craft_from_bank(character_name, target, need_craft = 999):
+    if now:
+        # Вернуть текущее значение, не изменяя его
+        return current_count
+
+    elif count is not None:
+        # Обновить текущее значение на переданное значение
+        if count <= 0:
+            current_count = 0
+        else:
+            current_count = count
+    else:
+        # Уменьшить текущее значение на единицу
+        current_count -= 1
+
+    return current_count
+async def craft_from_bank(character_name, target, need_craft = 0, recycl=False):
     recept, skill  = info.get_recept(target) # {name : quantity}, skill
 
     my_item = info.get_item_dict(character_name)
 
     recept_name_list = list(recept.keys())
-    bank_item = info.get_bank_items(recept_name_list) # {str : int}
 
     inv_max = info.get_inventory_max_items(character_name)
 
     can_craft = need_craft
 
-    for item in recept_name_list:
+    me_need = {}
+
+    if not recycl:
+        bank_item = info.get_bank_items(recept_name_list) # {str : int}
+
+        for item in recept_name_list:
+            in_inv = my_item.get(item, 0)
+            in_bank = bank_item.get(item, 0)
+            in_recept = recept.get(item, 0)
+            me_need = recept.items()
+
+            have_items_for_craft = (in_inv + in_bank) // in_recept
+
+            if have_items_for_craft == 0 or need_craft == 0:
+                print(f"{character_name} not can craft {target} needed more {item}")
+                await farm(character_name, target='mushmush')
+                return
+
+            if have_items_for_craft < can_craft:
+                can_craft = have_items_for_craft
+
+    else:
+        item = target
+        bank_item = info.get_bank_items([item]) # {str : int}
         in_inv = my_item.get(item, 0)
         in_bank = bank_item.get(item, 0)
-        in_recept = recept.get(item, 0)
+        me_need = [(target, 1)] # Вернется примерно 30% поэтому можно взять х2 предметов
 
-        have_items_for_craft = (in_inv + in_bank) // in_recept
+        have_items_for_craft = in_inv + in_bank
 
-        if have_items_for_craft == 0:
-            print(f"{character_name} not can craft {target} needed more {item}")
+        if have_items_for_craft == 0 or need_craft == 0:
+            print(f"{character_name} not can recycl {target} needed more {item}")
             await farm(character_name, target='mushmush')
             return
 
@@ -72,18 +114,33 @@ async def craft_from_bank(character_name, target, need_craft = 999):
 
     await all_in_bank(character_name)
 
-    for item, quantity in recept.items():
+    for item, quantity in me_need: # me_need = recept.items() dict_items([('greater_wooden_staff', 50)])
         print(f'{character_name} me need {quantity * can_craft} {item} from bank')
         action.withdraw_bank(character_name, item, quantity * can_craft)
         await wait_cooldown_from_response(character_name)
 
     await go_to(info.get_workshop(skill), character_name) # go workshop
 
-    response = action.craft(character_name, target, can_craft)
+
+    if recycl:
+        response = action.recycl(character_name, target, can_craft)
+
+
+    else:
+        response = action.craft(character_name, target, can_craft)
+
+    if recycl:
+        complete_action = 'Recycl'
+    else:
+        complete_action = 'Craft'
 
     if response.status_code == 200:
-        print(
-            f"{character_name} Craft code: {response.status_code} craft {can_craft} {target}")
+
+        print(f"{character_name} {complete_action} code: {response.status_code} {complete_action} {can_craft} {target}")
+
+        left = craft_need(now=True) - can_craft
+        craft_need(left)
+        print(f'{character_name} left ', craft_need(now=True))
         await wait_cooldown_from_response(character_name)
 
     elif response.status_code == 497:
@@ -93,7 +150,8 @@ async def craft_from_bank(character_name, target, need_craft = 999):
 
     else:
         print(response.json()['error'])
-        print(f"{character_name} - not can craft {recept_name_list} -> {can_craft} {target}")
+        for needed_item in recept_name_list:
+            print(f"{character_name} - not can {complete_action} {recept[needed_item]} {needed_item} -> {can_craft} {target}")
 
     await all_in_bank(character_name)
 
@@ -247,5 +305,8 @@ async def go_crafting(character_name, to_item_code):
     else:
         print(response.json()['error'])
         print(f"{character_name} - not can craft {count_in_inv} {to_item_code+postfix_inv} -> {can_craft} {to_item_code+postfix_craft}")
+
+
+
 
 

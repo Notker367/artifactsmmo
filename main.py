@@ -7,6 +7,7 @@ from tqdm import tqdm
 from dotenv import load_dotenv
 import os
 
+
 # Загрузка переменных из файла .env
 load_dotenv()
 
@@ -49,30 +50,27 @@ async def default_case(value):
     print(f"Error works case {value} !!!")
     await asyncio.sleep(30)
 
-def craft_need(count = None):
-    if count is None:
-        count = 50
-    count -= count
-    return count
+# Глобальная переменная для хранения текущего значения
 
 # Персонаж: 'Работа'
 professions = {
     char_I:     'wolf',
     char_II:    'trout',
     char_III:   'craft_from_bank',
-    char_IV:    'copper',
-    char_V:     'ash'
+    char_IV:    'iron',
+    char_V:     'spruce'
 }
+
 
 # Основная задача для персонажа
 async def task(character_name):
     print(f"Starting task for {character_name}")
 
-    from works import farm,gathering,craft_from_bank  # Отложенный импорт
+    from works import farm,gathering,craft_from_bank,craft_need  # Отложенный импорт
 
     # 'Работа': Функция
     works_dict = {
-        'craft_from_bank'   : (craft_from_bank,        'greater_wooden_staff'),
+        'craft_from_bank'   : (craft_from_bank,        'mushmush_bow'),
 
         'farm_chicken'      : (farm,        'chicken'),         #1
         'farm_red_slime'    : (farm,        'red_slime'),       #7
@@ -97,12 +95,19 @@ async def task(character_name):
     }
 
     work_function,add_param = works_dict.get(professions.get(character_name), default_case)
-    if work_function == craft_from_bank and add_param in works_dict:
-        need_craft = craft_need()
-        await work_function(character_name, target=add_param, need_craft=need_craft)
+
+    if (work_function == craft_from_bank
+            and craft_need(now=True) != 0):
+        need_craft = craft_need(now=True)
+        print(f"{character_name} will craft {need_craft} items.")
+        await work_function(character_name,
+                            target=add_param,
+                            need_craft=need_craft,
+                            recycl=True)
 
     elif add_param:
-        await work_function(character_name,target=add_param)
+        await work_function(character_name,
+                            target=add_param)
 
     else:
         await work_function(character_name)

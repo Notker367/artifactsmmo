@@ -102,11 +102,12 @@ def get_bank_items(items_list):
     items_dict = {}
     for item_name in items_list:
         response = api.world_info.get_bank_items(item_code=item_name).json()
-        data = response['data']
+#        data = response['data']
 
         if "error" in response:
-            response['data'] = {'code': item_name, 'quantity': 0}
-            return response
+            print(f"ERROR get_bank_items for {item_name}"
+                  f"{response}" )
+            return {'code': item_name, 'quantity': 0}
 
         if response['total'] > response['size']:
             print(f"WARNING - size in get_bank_items !!!")
