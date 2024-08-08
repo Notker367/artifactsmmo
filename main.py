@@ -57,7 +57,7 @@ professions = {
     char_I:     'wolf',
     char_II:    'trout',
     char_III:   'craft_from_bank',
-    char_IV:    'iron',
+    char_IV:    'coal',
     char_V:     'spruce'
 }
 
@@ -84,6 +84,7 @@ async def task(character_name):
 
         'copper'            : (gathering,   'copper'),
         'iron'              : (gathering,   'iron'),
+        'coal'              : (gathering,   'coal'),
 
         'ash'               : (gathering,   'ash'),
         'spruce'            : (gathering,   'spruce'),

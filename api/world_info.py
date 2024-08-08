@@ -37,6 +37,18 @@ def get_item_info(code):
 
     return response
 
+def get_item_monsters(code):
+    """
+
+    :param code: monsters code
+    :return: response
+    """
+
+    url = f"https://api.artifactsmmo.com/monsters/{code}"
+
+    response = requests.get(url)
+
+    return response
 
 
 def get_all_maps(content_type, content_code=None, page=1, size=100 ):

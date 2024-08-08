@@ -1,6 +1,6 @@
 import action
 import info
-import main
+
 from main import wait_cooldown_from_response
 
 # Функция перемещения персонажа к указанным координатам
@@ -25,7 +25,7 @@ async def go_to(coordinates, character_name):
 
 #Экономика
 #__________________________________________________________________________
-current_count = 50
+current_count = 30
 recycl=False
 async def all_in_bank(character_name):
     await go_to((4,1), character_name) # bank
@@ -195,6 +195,7 @@ resources = {
     # Метал
     'copper'       : (2,  0),
     'iron'         : (1,  7),
+    'coal'         : (1,  6),
     # Дерево
     'ash'          : (-1, 0),
     'spruce'       : (-2, 5),

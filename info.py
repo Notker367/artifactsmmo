@@ -1,6 +1,54 @@
 import action
 import api.world_info
-import api.world_info as w
+
+"""
+    +'Miner'             : 'mining',
+    +'Woodcutter'        : 'woodcutting',
+    +'Fisher'            : 'fishing',
+    +'Weaponcrafter'     : 'weaponcrafting',
+    +'Gearcrafter'       : 'gearcrafting',
+    +'Jewelrycrafter'    : 'jewelrycrafting',
+    +'Cooker'            : 'cooking',
+    'Fighter'           : 'fighting' #########
+"""
+
+def formater(data):
+
+    drops = data.get('drops', None)
+
+    if drops is not None:
+        skill = 'fighting'
+    elif data['craft'] is not None:         # weaponcrafting gearcrafting jewelrycrafting cooking
+        skill = data['craft']['skill']
+    else:                                   # mining woodcutting fishing fighting='mob'
+        skill = data['subtype']
+
+    if skill == 'mob':
+        skill = 'fighting'
+
+    data['for_work'] = skill
+    return {data['code'] : data}
+
+def about(target):
+    """
+
+    :param target: 'code' (name item or mob)
+    :return: dict {name : info from data.item or data}
+    """
+    response = api.world_info.get_item_info(target) # item
+
+    if response.status_code == 200:
+        data = response.json()['data']['item']
+    else:
+        response = api.world_info.get_item_monsters(target) # mob
+        if response.status_code == 200:
+            data = response.json()['data']
+        else:
+            print('ERROR info.about ', target)
+
+    data = formater(response['data'])
+
+    return data
 
 def get_position(character_name):
     """
@@ -105,7 +153,7 @@ def get_bank_items(items_list):
 #        data = response['data']
 
         if "error" in response:
-            print(f"ERROR get_bank_items for {item_name}"
+            print(f"WARNING get_bank_items for {item_name}"
                   f"{response}" )
             return {'code': item_name, 'quantity': 0}
 
