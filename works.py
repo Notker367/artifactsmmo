@@ -25,8 +25,8 @@ async def go_to(coordinates, character_name):
 
 #Экономика
 #__________________________________________________________________________
-current_count = 35
-
+current_count = 50
+recycl=False
 async def all_in_bank(character_name):
     await go_to((4,1), character_name) # bank
 
@@ -55,8 +55,10 @@ def craft_need(count=None, now=False):
         current_count -= 1
 
     return current_count
-async def craft_from_bank(character_name, target, need_craft = 0, recycl=False):
+async def craft_from_bank(character_name, target, need_craft = 0):
     recept, skill  = info.get_recept(target) # {name : quantity}, skill
+
+    global recycl
 
     my_item = info.get_item_dict(character_name)
 
