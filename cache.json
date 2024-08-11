@@ -1,0 +1,50 @@
+{
+    "static_data": {},
+    "dynamic_data": {
+        "copper_boots": {
+            "data": {
+                "name": "Copper Boots",
+                "code": "copper_boots",
+                "level": 1,
+                "type": "boots",
+                "subtype": "",
+                "description": "",
+                "effects": [
+                    {
+                        "name": "res_water",
+                        "value": 2
+                    },
+                    {
+                        "name": "res_earth",
+                        "value": 2
+                    },
+                    {
+                        "name": "res_fire",
+                        "value": 2
+                    },
+                    {
+                        "name": "res_air",
+                        "value": 2
+                    },
+                    {
+                        "name": "haste",
+                        "value": 2
+                    }
+                ],
+                "craft": {
+                    "skill": "gearcrafting",
+                    "level": 1,
+                    "items": [
+                        {
+                            "code": "copper",
+                            "quantity": 3
+                        }
+                    ],
+                    "quantity": 1
+                },
+                "for_work": "gearcrafting"
+            },
+            "last_update": 1723394466.1306605
+        }
+    }
+}

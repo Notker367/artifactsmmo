@@ -3,6 +3,8 @@ import os
 import time
 import requests
 
+import info
+
 CACHE_FILE = "cache.json"  # Имя файла для хранения кэша
 CACHE_EXPIRY = 1800  # Время истечения кэша (30 минут в секундах)
 
@@ -36,7 +38,7 @@ def check_in_cache(item_code):
         if not is_cache_expired(cache["dynamic_data"][item_code]["last_update"]):
             return cache["dynamic_data"][item_code]["data"]
 
-    response = fetch_item_data(item_code)
+    response = info.about(item_code)
     save_item_data_to_cache(item_code, response)
     return response
 

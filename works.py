@@ -3,6 +3,20 @@ import info
 
 from main import wait_cooldown_from_response
 
+# Обработка ответов при работе
+async def response_processing(character_name, response):
+    if response.status_code == 200:
+        print(f"{character_name} Fight code: {response.status_code}")
+        await wait_cooldown_from_response(character_name)
+
+    elif response.status_code == 497:
+        print(f"{character_name} - inventory is full")
+        await all_in_bank(character_name)
+        print(f"{character_name} - all_in_bank completed")
+
+    else:
+        print(response.json()['error'])
+
 # Функция перемещения персонажа к указанным координатам
 async def go_to(coordinates, character_name):
     if info.get_position(character_name) == coordinates:
@@ -187,6 +201,13 @@ async def farm(character_name, target):
     else:
         print(response.json()['error'])
 
+async def task_farm(character_name, task):
+    location = (1,1)
+
+    await go_to(location, character_name)
+
+    response = action.fight(character_name,debug=False)
+    await response_processing(character_name, response)
 
 
 #Добыча

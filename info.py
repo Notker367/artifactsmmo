@@ -13,6 +13,7 @@ import api.world_info
 """
 
 def formater(data):
+    print(data)
 
     drops = data.get('drops', None)
 
@@ -29,9 +30,10 @@ def formater(data):
     data['for_work'] = skill
     return {data['code'] : data}
 
+
 def about(target):
     """
-
+    and add data['for_work'] = skill
     :param target: 'code' (name item or mob)
     :return: dict {name : info from data.item or data}
     """
@@ -45,10 +47,11 @@ def about(target):
             data = response.json()['data']
         else:
             print('ERROR info.about ', target)
+            return
 
-    data = formater(response['data'])
+    data = formater(data)
 
-    return data
+    return data[target]
 
 def get_position(character_name):
     """
@@ -139,6 +142,29 @@ def get_workshop(workshop_code):
                       in workshops_info['data'] }
 
     return workshop_dict[workshop_code] if workshop_code != 'all' else workshops_info
+
+
+def get_monster_from_drop(item_code):
+    """
+    :param item_code: str
+    :return:
+    """
+    response = api.world_info.get_all_monsters(item_code)
+    data = response.json()['data']
+    monster = data['code']
+
+    pass
+
+"""    if workshop_code not in ['woodcutting', 'cooking', 'weaponcrafting', 'gearcrafting', 'jewelrycrafting','mining']:
+        print(f"get_workshop ERROR workshop_code = {workshop_code}")
+        return
+
+    workshops_info = api.world_info.get_all_maps('workshop').json()
+    workshop_dict = { workshop['content']['code'] : (workshop['x'], workshop['y'])
+                      for workshop
+                      in workshops_info['data'] }
+
+    return workshop_dict[workshop_code] if workshop_code != 'all' else workshops_info"""
 
 
 def get_bank_items(items_list):

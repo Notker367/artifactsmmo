@@ -77,6 +77,36 @@ def get_all_maps(content_type, content_code=None, page=1, size=100 ):
 
     return response
 
+
+def get_all_monsters(drop, max_level=None, min_level=None, page=1, size=100 ):
+    """
+
+    :param drop: item_code
+    :param min_level: int
+    :param max_level: int
+    :param page: 1
+    :param size: 100
+    :return: response
+    """
+
+    url = f"https://api.artifactsmmo.com/monsters/"
+
+    data = {
+        'drop'          : drop,
+        'max_level'     : max_level,
+        'min_level'     : min_level,
+        'page'          : page,
+        'size'          : size
+    }
+
+    response = requests.get(url, params=data)
+
+    if response.json()['total'] >= size:
+        print(f"WARNING - size in get_all_monsters !!!")
+
+    return response
+
+
 def get_bank_items(item_code=None, page=1, size=100):
     url = f"https://api.artifactsmmo.com/my/bank/items"
 

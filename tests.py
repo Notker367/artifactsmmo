@@ -2,6 +2,8 @@ import action
 import pytest
 
 import api.world_info
+import tasks_manager
+import cache_manager
 
 character_name = "Pivos"
 
@@ -20,4 +22,7 @@ def test_cooldown():
 
 #def test_map_info():
 
-
+def test_tasks():
+    x = cache_manager.check_in_cache('copper_boots')
+    print(x)
+    print(tasks_manager.task_board)

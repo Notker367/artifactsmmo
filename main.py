@@ -7,6 +7,9 @@ from tqdm import tqdm
 from dotenv import load_dotenv
 import os
 
+import cache_manager
+import db
+import tasks_manager
 
 # Загрузка переменных из файла .env
 load_dotenv()
@@ -54,13 +57,27 @@ async def default_case(value):
 
 # Персонаж: 'Работа'
 professions = {
-    char_I:     'wolf',
-    char_II:    'trout',
-    char_III:   'craft_from_bank',
-    char_IV:    'coal',
-    char_V:     'spruce'
+    char_I:     'skeleton',
+    char_II:    'bass',
+    char_III:   'mushmush',
+    char_IV:    'iron',
+    char_V:     'birch'
 }
 
+async def task2(character_name):
+    works_dict = db.works_dict                          # {skill : func}
+    my_task = tasks_manager.get_task(character_name)    # ('code', 'quantity')
+    if my_task:
+        target = my_task['code']
+        info = cache_manager.check_in_cache(target)
+        need_work = info['for_work']
+
+        work_function = works_dict[need_work]
+
+        await work_function(character_name, my_task)
+
+    else:
+        await task(character_name)
 
 # Основная задача для персонажа
 async def task(character_name):
@@ -70,8 +87,8 @@ async def task(character_name):
 
     # 'Работа': Функция
     works_dict = {
-        'craft_from_bank'   : (craft_from_bank,        'mushmush_bow'),
-
+        'craft_from_bank'   : (craft_from_bank,        'life_ring'),
+    # lucky_wizard_hat mushmush_jacket adventurer_boots
         'farm_chicken'      : (farm,        'chicken'),         #1
         'farm_red_slime'    : (farm,        'red_slime'),       #7
         'farm_blue_slime'   : (farm,        'blue_slime'),      #6
@@ -81,17 +98,21 @@ async def task(character_name):
         'mushmush'          : (farm,        'mushmush'),        #10
         'flying_serpent'    : (farm,        'flying_serpent'),  #12
         'wolf'              : (farm,        'wolf'),            #15
+        'skeleton'          : (farm,        'skeleton'),        #18
 
         'copper'            : (gathering,   'copper'),
         'iron'              : (gathering,   'iron'),
+        'steel'             : (gathering,   'iron'),
         'coal'              : (gathering,   'coal'),
 
         'ash'               : (gathering,   'ash'),
         'spruce'            : (gathering,   'spruce'),
+        'birch'             : (gathering,   'birch'),
 
         'gudgeon'           : (gathering,   'gudgeon'),
         'shrimp'            : (gathering,   'shrimp'),
         'trout'             : (gathering,   'trout'),
+        'bass'              : (gathering,   'bass'),
 
     }
 
