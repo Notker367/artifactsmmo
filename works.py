@@ -1,13 +1,15 @@
 import action
+import cache_manager
 import info
+import tasks_manager
 
 from main import wait_cooldown_from_response
 
 # Обработка ответов при работе
 async def response_processing(character_name, response):
     if response.status_code == 200:
-        print(f"{character_name} Fight code: {response.status_code}")
         await wait_cooldown_from_response(character_name)
+        return True
 
     elif response.status_code == 497:
         print(f"{character_name} - inventory is full")
@@ -17,8 +19,14 @@ async def response_processing(character_name, response):
     else:
         print(response.json()['error'])
 
+    return
+
+
+
 # Функция перемещения персонажа к указанным координатам
 async def go_to(coordinates, character_name):
+    coordinates = (coordinates[0],coordinates[1]) # for [x,y] and (x,y)
+
     if info.get_position(character_name) == coordinates:
         print(f"{character_name} - already in position now")
         return
@@ -50,6 +58,109 @@ async def all_in_bank(character_name):
         action.deposit_bank(character_name, name, quantity)
         print(f"{character_name} deposit {quantity} - {name} in bank")
         await wait_cooldown_from_response(character_name)
+
+
+async def task_craft(character_name, task):
+    target = task[0]
+    need_craft = task[1]
+    target_info = cache_manager.check_in_cache(target)
+    work = target_info['for_work']
+    location = target_info['craft']['location']
+    recept  = target_info['craft']['recept'] # {name : quantity}
+    skill = work
+
+    global recycl
+    recycl = False
+
+    my_item = info.get_item_dict(character_name)
+
+    recept_name_list = list(recept.keys())
+
+    inv_max = info.get_inventory_max_items(character_name)
+
+    can_craft = need_craft
+
+    me_need = {}
+
+    if not recycl:
+        bank_item = info.get_bank_items(recept_name_list) # {str : int}
+
+        for item in recept_name_list:
+            in_inv = my_item.get(item, 0)
+            in_bank = bank_item.get(item, 0)
+            in_recept = recept.get(item, 0)
+            me_need = recept.items()
+
+            have_items_for_craft = (in_inv + in_bank) // in_recept
+
+            if have_items_for_craft == 0 or need_craft == 0:
+                print(f"{character_name} not can craft {target} needed more {item}")
+                tasks_manager.add_to_task_board(item, need_craft * in_recept)
+                return
+
+            if have_items_for_craft < can_craft:
+                can_craft = have_items_for_craft
+
+    else:
+        item = target
+        bank_item = info.get_bank_items([item]) # {str : int}
+        in_inv = my_item.get(item, 0)
+        in_bank = bank_item.get(item, 0)
+        me_need = [(target, 1)] # Вернется примерно 30% поэтому можно взять х2 предметов
+
+        have_items_for_craft = in_inv + in_bank
+
+        if have_items_for_craft == 0 or need_craft == 0:
+            print(f"{character_name} not can recycl {target} needed more {item}")
+            await farm(character_name, target='mushmush')
+            return
+
+        if have_items_for_craft < can_craft:
+            can_craft = have_items_for_craft
+
+    need_slots_for_one = 0
+
+    for item, quantity_need in recept.items():
+        need_slots_for_one += quantity_need
+
+    if need_slots_for_one * can_craft > inv_max:
+        can_craft = inv_max // need_slots_for_one
+
+    await all_in_bank(character_name)
+
+    for item, quantity in me_need: # me_need = recept.items() dict_items([('greater_wooden_staff', 50)])
+        print(f'{character_name} me need {quantity * can_craft} {item} from bank')
+        action.withdraw_bank(character_name, item, quantity * can_craft)
+        await wait_cooldown_from_response(character_name)
+
+    await go_to(location, character_name) # go workshop
+
+    if recycl:
+        response = action.recycl(character_name, target, can_craft)
+
+
+    else:
+        response = action.craft(character_name, target, can_craft)
+
+    if recycl:
+        complete_action = 'Recycl'
+    else:
+        complete_action = 'Craft'
+
+    ok = await response_processing(character_name, response)
+
+    if ok:
+        print(f"{character_name} {complete_action} code: {response.status_code} {complete_action} {can_craft} {target}")
+        await all_in_bank(character_name)
+    else:
+        for needed_item in recept_name_list:
+            print(
+                f"{character_name} - not can {complete_action} {recept[needed_item]} {needed_item} -> {can_craft} {target}")
+
+        # check inv
+        # create new task
+
+
 
 def craft_need(count=None, now=False):
     global current_count
@@ -201,13 +312,24 @@ async def farm(character_name, target):
     else:
         print(response.json()['error'])
 
+
 async def task_farm(character_name, task):
-    location = (1,1)
+    #
+    target = task[0]
+    target_info = cache_manager.check_in_cache(target)
+    location = target_info['location']  # get_monster_info[]
+    work = target_info['for_work']
 
     await go_to(location, character_name)
 
-    response = action.fight(character_name,debug=False)
-    await response_processing(character_name, response)
+    response = action.fight(character_name, debug=False)
+
+    ok = await response_processing(character_name, response)
+
+    if ok:
+        print(f"{character_name} Fight code: ok")
+        # check inv
+        # create new task
 
 
 #Добыча
@@ -270,6 +392,23 @@ async def gathering(character_name, target):
     else:
         print(response.json()['error'])
 
+async def task_gathering(character_name, task):
+    #
+    target = task[0]
+    target_info = cache_manager.check_in_cache(target)
+    location = target_info['location']  # get_monster_info[]
+    work = target_info['for_work']
+
+    await go_to(location, character_name)
+
+    response = action.gathering(character_name)
+
+    ok = await response_processing(character_name, response)
+
+    if ok:
+        print(f"{character_name} Gathering code: ok")
+        # check inv
+        # create new task
 
 
 
@@ -332,5 +471,11 @@ async def go_crafting(character_name, to_item_code):
 
 
 
-
-
+#    'Miner'             : 'mining',
+ #   'Woodcutter'        : 'woodcutting',
+  #  'Fisher'            : 'fishing',
+#    'Weaponcrafter'     : 'weaponcrafting',
+ #   'Gearcrafter'       : 'gearcrafting',
+  #  'Jewelrycrafter'    : 'jewelrycrafting',
+   # 'Cooker'            : 'cooking',
+  #  'Fighter'           : 'fighting'

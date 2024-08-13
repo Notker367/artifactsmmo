@@ -43,20 +43,16 @@ def check_in_cache(item_code):
     return response
 
 
-def fetch_item_data(item_code):
-    # Запрос данных об элементе из API
-    url = f"https://api.artifactsmmo.com/items/{item_code}"
-    response = requests.get(url, headers={"Accept": "application/json"})
-    data = response.json()["data"]
-    return {
-        "name": data["item"]["name"],
-        "level": data["item"]["level"],
-        "type": data["item"]["type"],
-        "subtype": data["item"]["subtype"],
-        "stock": data["ge"]["stock"],
-        "sell_price": data["ge"]["sell_price"],
-        "buy_price": data["ge"]["buy_price"],
-    }
+def have_in_cache(item_code):
+    # Проверка наличия элемента в кэше
+    cache = load_cache()
+    if item_code in cache["static_data"]:
+        return True
+
+    if item_code in cache["dynamic_data"]:
+        return True
+
+    return False
 
 
 def save_item_data_to_cache(item_code, data, is_static=False):

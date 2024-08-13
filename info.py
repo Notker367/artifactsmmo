@@ -1,5 +1,6 @@
-import action
+import db
 import api.world_info
+import cache_manager
 
 """
     +'Miner'             : 'mining',
@@ -9,26 +10,82 @@ import api.world_info
     +'Gearcrafter'       : 'gearcrafting',
     +'Jewelrycrafter'    : 'jewelrycrafting',
     +'Cooker'            : 'cooking',
-    'Fighter'           : 'fighting' #########
+    +'Fighter'            : 'fighting' #########
 """
+def add_drops_from_code(drops_list, code):
+    for item in drops_list:
+        code_item = item['code']
+        cache_manager.add_static_item(code_item+'_drop',  code)
+
 
 def formater(data):
     print(data)
+    craft = False
 
     drops = data.get('drops', None)
+    skill = data.get('skill', None)
+    craft = data.get('craft', None)
+    is_spot = data.get('skin',None)
 
-    if drops is not None:
+    if (drops is not None) and (skill is None):                   # fighting monster
         skill = 'fighting'
-    elif data['craft'] is not None:         # weaponcrafting gearcrafting jewelrycrafting cooking
-        skill = data['craft']['skill']
+        monster = data['code']
+        add_drops_from_code(drops,monster)
+        locations = get_positions_monster(monster)
+        location = locations[0]
+
+    elif (drops is not None) and (skill is not None):               #  spot item
+        skill = skill
+        spot = data['code']
+        add_drops_from_code(drops,spot)
+        locations = get_positions_spot(spot)
+        location = locations[0]
+
+    elif craft is not None:         # ['woodcutting', 'cooking', 'weaponcrafting', 'gearcrafting', 'jewelrycrafting','mining']
+        craft = True
+        recept, skill = get_recept(data['code'])
+        workshop_location = get_workshop(skill)
+        data['craft']['recept'] = recept
+        data['craft']['location'] = workshop_location
+        location = (4, 1) #mock bank
+
+    elif is_spot is not None:               # spot loc
+        location = [data['x'],data['y']]
+        data['code'] = data['content']['code']
+
     else:                                   # mining woodcutting fishing fighting='mob'
         skill = data['subtype']
+        item_code = data['code']
 
-    if skill == 'mob':
+        spot = check_know(item_code, db.famous_spots)
+        locations = get_positions_spot(spot)
+        location = locations[0]
+
+    if skill == 'mob':                      # fighting resource
         skill = 'fighting'
+        item_code = data['code']
 
+        monster = check_know(item_code, db.famous_monsters)
+        locations = get_positions_monster(monster)
+        location = locations[0]
+
+
+    data['location'] = location
+    data['need_craft'] = craft
     data['for_work'] = skill
     return {data['code'] : data}
+
+
+def check_know(item_code, db_from):
+    know = cache_manager.have_in_cache(item_code + '_drop')
+    if not know:
+        for know_code in db_from:
+            if cache_manager.have_in_cache(know_code):
+                continue
+            else:
+                cache_manager.check_in_cache(know_code)
+    need = cache_manager.check_in_cache(item_code + '_drop')
+    return need
 
 
 def about(target):
@@ -38,20 +95,27 @@ def about(target):
     :return: dict {name : info from data.item or data}
     """
     response = api.world_info.get_item_info(target) # item
-
     if response.status_code == 200:
         data = response.json()['data']['item']
     else:
-        response = api.world_info.get_item_monsters(target) # mob
+
+        response = api.world_info.get_monster(target) # mob
         if response.status_code == 200:
             data = response.json()['data']
         else:
-            print('ERROR info.about ', target)
-            return
+
+            response = api.world_info.get_all_maps(content_code=target, content_type='resource') # spot
+            if response.status_code == 200:
+                data = response.json()['data'][0]
+            else:
+
+                print('ERROR info.about ', target)
+                return
 
     data = formater(data)
 
     return data[target]
+
 
 def get_position(character_name):
     """
@@ -69,6 +133,45 @@ def get_position(character_name):
 
     return now_position_x,now_position_y
 
+def get_positions_monster(monster):
+    """
+    Получает текущую позицию персонажа по его имени.
+
+    :param monster: Имя персонажа, для которого требуется получить текущую позицию.
+    :type monster: Str
+    :return: Список с текущими координатами [x,y] монстра.
+    :rtype: List[[x,y],[x,y]]
+    """
+    response = api.world_info.get_all_maps(content_code=monster, content_type='monster')
+    data = response.json()['data']
+
+    positions = []
+    for info in data:
+        now_position_x = info['x']
+        now_position_y = info['y']
+        positions += [[now_position_x, now_position_y]]
+
+    return positions
+
+def get_positions_spot(spot):
+    """
+    Получает текущую позицию персонажа по его имени.
+
+    :param spot: Имя spot, для которого требуется получить текущую позицию.
+    :type spot: Str
+    :return: Список с текущими координатами [x,y] spot.
+    :rtype: List[[x,y],[x,y]]
+    """
+    response = api.world_info.get_all_maps(content_code=spot, content_type='resource')
+    data = response.json()['data']
+
+    positions = []
+    for info in data:
+        now_position_x = info['x']
+        now_position_y = info['y']
+        positions += [[now_position_x, now_position_y]]
+
+    return positions
 
 def get_recept(item_code):
     """

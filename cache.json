@@ -1,50 +1,245 @@
 {
     "static_data": {},
     "dynamic_data": {
-        "copper_boots": {
+        "gold_rocks": {
             "data": {
-                "name": "Copper Boots",
-                "code": "copper_boots",
-                "level": 1,
-                "type": "boots",
-                "subtype": "",
-                "description": "",
-                "effects": [
-                    {
-                        "name": "res_water",
-                        "value": 2
-                    },
-                    {
-                        "name": "res_earth",
-                        "value": 2
-                    },
-                    {
-                        "name": "res_fire",
-                        "value": 2
-                    },
-                    {
-                        "name": "res_air",
-                        "value": 2
-                    },
-                    {
-                        "name": "haste",
-                        "value": 2
-                    }
-                ],
-                "craft": {
-                    "skill": "gearcrafting",
-                    "level": 1,
-                    "items": [
-                        {
-                            "code": "copper",
-                            "quantity": 3
-                        }
-                    ],
-                    "quantity": 1
+                "name": "Forest",
+                "skin": "forest_goldore1",
+                "x": 10,
+                "y": -4,
+                "content": {
+                    "type": "resource",
+                    "code": "gold_rocks"
                 },
-                "for_work": "gearcrafting"
+                "code": "gold_rocks",
+                "location": [
+                    10,
+                    -4
+                ],
+                "need_craft": null,
+                "for_work": null
             },
-            "last_update": 1723394466.1306605
+            "last_update": 1723514860.0853822
+        },
+        "ash_tree": {
+            "data": {
+                "name": "Forest",
+                "skin": "forest_ashtree2",
+                "x": -1,
+                "y": 0,
+                "content": {
+                    "type": "resource",
+                    "code": "ash_tree"
+                },
+                "code": "ash_tree",
+                "location": [
+                    -1,
+                    0
+                ],
+                "need_craft": null,
+                "for_work": null
+            },
+            "last_update": 1723514861.9182653
+        },
+        "copper_rocks": {
+            "data": {
+                "name": "Forest",
+                "skin": "forest_copperore1",
+                "x": 2,
+                "y": 0,
+                "content": {
+                    "type": "resource",
+                    "code": "copper_rocks"
+                },
+                "code": "copper_rocks",
+                "location": [
+                    2,
+                    0
+                ],
+                "need_craft": null,
+                "for_work": null
+            },
+            "last_update": 1723514863.8017259
+        },
+        "gudgeon_fishing_spot": {
+            "data": {
+                "name": "Lake",
+                "skin": "forest_lake3",
+                "x": 4,
+                "y": 2,
+                "content": {
+                    "type": "resource",
+                    "code": "gudgeon_fishing_spot"
+                },
+                "code": "gudgeon_fishing_spot",
+                "location": [
+                    4,
+                    2
+                ],
+                "need_craft": null,
+                "for_work": null
+            },
+            "last_update": 1723514865.6925938
+        },
+        "shrimp_fishing_spot": {
+            "data": {
+                "name": "Lake",
+                "skin": "forest_lake4",
+                "x": 5,
+                "y": 2,
+                "content": {
+                    "type": "resource",
+                    "code": "shrimp_fishing_spot"
+                },
+                "code": "shrimp_fishing_spot",
+                "location": [
+                    5,
+                    2
+                ],
+                "need_craft": null,
+                "for_work": null
+            },
+            "last_update": 1723514867.5745366
+        },
+        "spruce_tree": {
+            "data": {
+                "name": "Forest",
+                "skin": "forest_sprucetree1",
+                "x": -2,
+                "y": 5,
+                "content": {
+                    "type": "resource",
+                    "code": "spruce_tree"
+                },
+                "code": "spruce_tree",
+                "location": [
+                    -2,
+                    5
+                ],
+                "need_craft": null,
+                "for_work": null
+            },
+            "last_update": 1723514869.4316921
+        },
+        "birch_tree": {
+            "data": {
+                "name": "Forest",
+                "skin": "forest_birchtree2",
+                "x": 3,
+                "y": 5,
+                "content": {
+                    "type": "resource",
+                    "code": "birch_tree"
+                },
+                "code": "birch_tree",
+                "location": [
+                    3,
+                    5
+                ],
+                "need_craft": null,
+                "for_work": null
+            },
+            "last_update": 1723514872.5720227
+        },
+        "bass_fishing_spot": {
+            "data": {
+                "name": "Lake",
+                "skin": "forest_lake1",
+                "x": -3,
+                "y": 6,
+                "content": {
+                    "type": "resource",
+                    "code": "bass_fishing_spot"
+                },
+                "code": "bass_fishing_spot",
+                "location": [
+                    -3,
+                    6
+                ],
+                "need_craft": null,
+                "for_work": null
+            },
+            "last_update": 1723514874.405635
+        },
+        "trout_fishing_spot": {
+            "data": {
+                "name": "Lake",
+                "skin": "forest_lake2",
+                "x": -2,
+                "y": 6,
+                "content": {
+                    "type": "resource",
+                    "code": "trout_fishing_spot"
+                },
+                "code": "trout_fishing_spot",
+                "location": [
+                    -2,
+                    6
+                ],
+                "need_craft": null,
+                "for_work": null
+            },
+            "last_update": 1723514876.2736337
+        },
+        "coal_rocks": {
+            "data": {
+                "name": "Forest",
+                "skin": "forest_coal1",
+                "x": 1,
+                "y": 6,
+                "content": {
+                    "type": "resource",
+                    "code": "coal_rocks"
+                },
+                "code": "coal_rocks",
+                "location": [
+                    1,
+                    6
+                ],
+                "need_craft": null,
+                "for_work": null
+            },
+            "last_update": 1723514878.1416934
+        },
+        "iron_rocks": {
+            "data": {
+                "name": "Forest",
+                "skin": "forest_ironore1",
+                "x": 1,
+                "y": 7,
+                "content": {
+                    "type": "resource",
+                    "code": "iron_rocks"
+                },
+                "code": "iron_rocks",
+                "location": [
+                    1,
+                    7
+                ],
+                "need_craft": null,
+                "for_work": null
+            },
+            "last_update": 1723514880.0124755
+        },
+        "dead_tree": {
+            "data": {
+                "name": "Graveyard",
+                "skin": "forest_skeleton8",
+                "x": 9,
+                "y": 8,
+                "content": {
+                    "type": "resource",
+                    "code": "dead_tree"
+                },
+                "code": "dead_tree",
+                "location": [
+                    9,
+                    8
+                ],
+                "need_craft": null,
+                "for_work": null
+            },
+            "last_update": 1723514881.8914304
         }
     }
 }

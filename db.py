@@ -47,6 +47,37 @@ works_dict = {
 
 }
 
+famous_monsters = [
+    'chicken',
+    'red_slime',
+    'blue_slime',
+    'green_slime',
+    'yellow_slime',
+    'cow',
+    'mushmush',
+    'flying_serpent',
+    'wolf',
+    'skeleton',
+]
+
+famous_spots = [
+    "gold_rocks",
+    "ash_tree",
+    "copper_rocks",
+    "ash_tree",
+    "gudgeon_fishing_spot",
+    "shrimp_fishing_spot",
+    "spruce_tree",
+    "birch_tree",
+    "bass_fishing_spot",
+    "trout_fishing_spot",
+    "birch_tree",
+    "coal_rocks",
+    "spruce_tree",
+    "iron_rocks",
+    "dead_tree",
+]
+
 # задача (что, сколько) -> профессия -> персонаж -> условия -> добавить в список -> проверка списка -> дефолт действие
 
 

@@ -37,7 +37,7 @@ def get_item_info(code):
 
     return response
 
-def get_item_monsters(code):
+def get_monster(code):
     """
 
     :param code: monsters code
@@ -69,10 +69,10 @@ def get_all_maps(content_type, content_code=None, page=1, size=100 ):
         'page'         : page,
         'size'         : size
     }
-
+    print('!!!!!!', data)
     response = requests.get(url, params=data)
 
-    if response.json()['total'] >= size:
+    if response.json()['total'] >= size and response.status_code == 200:
         print(f"WARNING - size in get_all_maps !!!")
 
     return response

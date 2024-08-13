@@ -14,7 +14,8 @@ task_dict = {
 }
 task_board= {
 #   'skill' : [task, task, task],
-    'gearcrafting' : [('mushmush_wizard_hat', 1)]
+    'gearcrafting' : [('mushmush_wizard_hat', 1)],
+    'woodcutting'  : [('spruce_plank', 10)]
 }
 
 default_tasks = {
