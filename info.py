@@ -28,6 +28,7 @@ def formater(data):
     is_spot = data.get('skin',None)
 
     if (drops is not None) and (skill is None):                   # fighting monster
+        print('111111111111111111')
         skill = 'fighting'
         monster = data['code']
         add_drops_from_code(drops,monster)
@@ -35,6 +36,7 @@ def formater(data):
         location = locations[0]
 
     elif (drops is not None) and (skill is not None):               #  spot item
+        print('22222222222222')
         skill = skill
         spot = data['code']
         add_drops_from_code(drops,spot)
@@ -42,6 +44,7 @@ def formater(data):
         location = locations[0]
 
     elif craft is not None:         # ['woodcutting', 'cooking', 'weaponcrafting', 'gearcrafting', 'jewelrycrafting','mining']
+        print('3333333333333333333333')
         craft = True
         recept, skill = get_recept(data['code'])
         workshop_location = get_workshop(skill)
@@ -50,40 +53,52 @@ def formater(data):
         location = (4, 1) #mock bank
 
     elif is_spot is not None:               # spot loc
+        print('44444444444444444')
         location = [data['x'],data['y']]
         data['code'] = data['content']['code']
 
     else:                                   # mining woodcutting fishing fighting='mob'
         skill = data['subtype']
-        item_code = data['code']
+        print('55555555555555555555555')
 
-        spot = check_know(item_code, db.famous_spots)
-        locations = get_positions_spot(spot)
-        location = locations[0]
+        if skill == 'mob':                      # fighting resource
+            print('66666666666666666666')
+            skill = 'fighting'
+            item_code = data['code']
 
-    if skill == 'mob':                      # fighting resource
-        skill = 'fighting'
-        item_code = data['code']
+            monster = add_to_drops(item_code, db.famous_monsters)
+            locations = get_positions_monster(monster)
+            location = locations[0]
 
-        monster = check_know(item_code, db.famous_monsters)
-        locations = get_positions_monster(monster)
-        location = locations[0]
+        elif skill in ['woodcutting', 'fishing', 'mining']: # geting res
+            print('77777777777777777777')
+            item_code = data['code']
+
+            spot = add_to_drops(item_code, db.famous_spots)
+            locations = get_positions_spot(spot)
+            location = locations[0]
+
+        else:
+            location = (0,0) # mock
+
+
 
 
     data['location'] = location
     data['need_craft'] = craft
     data['for_work'] = skill
+    print('end data ', data)
     return {data['code'] : data}
 
 
-def check_know(item_code, db_from):
-    know = cache_manager.have_in_cache(item_code + '_drop')
+def add_to_drops(item_code, db_from):
+    know = cache_manager.have_in_cache(item_code + '_drop') # have_in_cache?
     if not know:
-        for know_code in db_from:
-            if cache_manager.have_in_cache(know_code):
+        for target_code in db_from:
+            if cache_manager.have_in_cache(target_code):
                 continue
             else:
-                cache_manager.check_in_cache(know_code)
+                cache_manager.check_in_cache(target_code)
     need = cache_manager.check_in_cache(item_code + '_drop')
     return need
 
@@ -94,6 +109,7 @@ def about(target):
     :param target: 'code' (name item or mob)
     :return: dict {name : info from data.item or data}
     """
+    print('!!!!!!! about ', target)
     response = api.world_info.get_item_info(target) # item
     if response.status_code == 200:
         data = response.json()['data']['item']
@@ -104,13 +120,18 @@ def about(target):
             data = response.json()['data']
         else:
 
-            response = api.world_info.get_all_maps(content_code=target, content_type='resource') # spot
+            response = api.world_info.get_resource(target)  # res
             if response.status_code == 200:
-                data = response.json()['data'][0]
+                data = response.json()['data']
             else:
 
-                print('ERROR info.about ', target)
-                return
+                response = api.world_info.get_all_maps(content_code=target, content_type='resource') # spot
+                if response.status_code == 200:
+                    data = response.json()['data'][0]
+                else:
+
+                    print('ERROR info.about ', target)
+                    return
 
     data = formater(data)
 

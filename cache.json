@@ -1,245 +1,533 @@
 {
-    "static_data": {},
+    "static_data": {
+        "raw_chicken_drop": "chicken",
+        "egg_drop": "chicken",
+        "golden_egg_drop": "chicken",
+        "feather_drop": "chicken",
+        "red_slimeball_drop": "red_slime",
+        "blue_slimeball_drop": "blue_slime",
+        "green_slimeball_drop": "green_slime",
+        "yellow_slimeball_drop": "yellow_slime",
+        "raw_beef_drop": "cow",
+        "milk_bucket_drop": "cow",
+        "cowhide_drop": "cow",
+        "mushroom_drop": "mushmush",
+        "flying_wing_drop": "flying_serpent",
+        "serpent_skin_drop": "flying_serpent",
+        "raw_wolf_meat_drop": "wolf",
+        "wolf_bone_drop": "wolf",
+        "wolf_hair_drop": "wolf",
+        "skeleton_bone_drop": "skeleton",
+        "skeleton_skull_drop": "skeleton",
+        "pig_skin_drop": "pig",
+        "gold_ore_drop": "gold_rocks",
+        "topaz_drop": "gold_rocks",
+        "emerald_drop": "gold_rocks",
+        "ruby_drop": "gold_rocks",
+        "sapphire_drop": "gold_rocks"
+    },
     "dynamic_data": {
+        "chicken": {
+            "data": {
+                "name": "Chicken",
+                "code": "chicken",
+                "level": 1,
+                "hp": 60,
+                "attack_fire": 0,
+                "attack_earth": 0,
+                "attack_water": 4,
+                "attack_air": 0,
+                "res_fire": 0,
+                "res_earth": 0,
+                "res_water": 0,
+                "res_air": 0,
+                "min_gold": 0,
+                "max_gold": 1,
+                "drops": [
+                    {
+                        "code": "raw_chicken",
+                        "rate": 10,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "egg",
+                        "rate": 20,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "golden_egg",
+                        "rate": 5000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "feather",
+                        "rate": 10,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    0,
+                    1
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723540884.411196
+        },
+        "red_slime": {
+            "data": {
+                "name": "Red Slime",
+                "code": "red_slime",
+                "level": 7,
+                "hp": 120,
+                "attack_fire": 18,
+                "attack_earth": 0,
+                "attack_water": 0,
+                "attack_air": 0,
+                "res_fire": 25,
+                "res_earth": 0,
+                "res_water": 0,
+                "res_air": 0,
+                "min_gold": 0,
+                "max_gold": 1,
+                "drops": [
+                    {
+                        "code": "red_slimeball",
+                        "rate": 12,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    2,
+                    -2
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723540886.312193
+        },
+        "blue_slime": {
+            "data": {
+                "name": "Blue Slime",
+                "code": "blue_slime",
+                "level": 6,
+                "hp": 120,
+                "attack_fire": 0,
+                "attack_earth": 0,
+                "attack_water": 15,
+                "attack_air": 0,
+                "res_fire": 0,
+                "res_earth": 0,
+                "res_water": 25,
+                "res_air": 0,
+                "min_gold": 0,
+                "max_gold": 1,
+                "drops": [
+                    {
+                        "code": "blue_slimeball",
+                        "rate": 12,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    0,
+                    -2
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723540888.2449217
+        },
+        "green_slime": {
+            "data": {
+                "name": "Green Slime",
+                "code": "green_slime",
+                "level": 4,
+                "hp": 80,
+                "attack_fire": 0,
+                "attack_earth": 0,
+                "attack_water": 0,
+                "attack_air": 12,
+                "res_fire": 0,
+                "res_earth": 0,
+                "res_water": 0,
+                "res_air": 25,
+                "min_gold": 0,
+                "max_gold": 1,
+                "drops": [
+                    {
+                        "code": "green_slimeball",
+                        "rate": 12,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    3,
+                    -2
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723540890.1872008
+        },
+        "yellow_slime": {
+            "data": {
+                "name": "Yellow Slime",
+                "code": "yellow_slime",
+                "level": 2,
+                "hp": 70,
+                "attack_fire": 0,
+                "attack_earth": 8,
+                "attack_water": 0,
+                "attack_air": 0,
+                "res_fire": 0,
+                "res_earth": 25,
+                "res_water": 0,
+                "res_air": 0,
+                "min_gold": 0,
+                "max_gold": 1,
+                "drops": [
+                    {
+                        "code": "yellow_slimeball",
+                        "rate": 12,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    1,
+                    -2
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723540892.0868921
+        },
+        "cow": {
+            "data": {
+                "name": "Cow",
+                "code": "cow",
+                "level": 8,
+                "hp": 280,
+                "attack_fire": 0,
+                "attack_earth": 0,
+                "attack_water": 0,
+                "attack_air": 21,
+                "res_fire": 0,
+                "res_earth": -30,
+                "res_water": 30,
+                "res_air": 0,
+                "min_gold": 0,
+                "max_gold": 1,
+                "drops": [
+                    {
+                        "code": "raw_beef",
+                        "rate": 10,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "milk_bucket",
+                        "rate": 20,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "cowhide",
+                        "rate": 10,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    0,
+                    2
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723540893.9986238
+        },
+        "mushmush": {
+            "data": {
+                "name": "Mushmush",
+                "code": "mushmush",
+                "level": 10,
+                "hp": 350,
+                "attack_fire": 16,
+                "attack_earth": 0,
+                "attack_water": 16,
+                "attack_air": 0,
+                "res_fire": 20,
+                "res_earth": 20,
+                "res_water": 0,
+                "res_air": -30,
+                "min_gold": 0,
+                "max_gold": 2,
+                "drops": [
+                    {
+                        "code": "mushroom",
+                        "rate": 16,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    5,
+                    3
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723540896.2498972
+        },
+        "flying_serpent": {
+            "data": {
+                "name": "Flying Serpent",
+                "code": "flying_serpent",
+                "level": 12,
+                "hp": 360,
+                "attack_fire": 0,
+                "attack_earth": 0,
+                "attack_water": 0,
+                "attack_air": 34,
+                "res_fire": -20,
+                "res_earth": 0,
+                "res_water": -20,
+                "res_air": 40,
+                "min_gold": 0,
+                "max_gold": 2,
+                "drops": [
+                    {
+                        "code": "flying_wing",
+                        "rate": 16,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "serpent_skin",
+                        "rate": 16,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    5,
+                    4
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723540898.513669
+        },
+        "wolf": {
+            "data": {
+                "name": "Wolf",
+                "code": "wolf",
+                "level": 15,
+                "hp": 400,
+                "attack_fire": 0,
+                "attack_earth": 0,
+                "attack_water": 18,
+                "attack_air": 18,
+                "res_fire": -10,
+                "res_earth": -10,
+                "res_water": 10,
+                "res_air": 10,
+                "min_gold": 0,
+                "max_gold": 3,
+                "drops": [
+                    {
+                        "code": "raw_wolf_meat",
+                        "rate": 10,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "wolf_bone",
+                        "rate": 16,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "wolf_hair",
+                        "rate": 16,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    -3,
+                    0
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723540900.4330032
+        },
+        "skeleton": {
+            "data": {
+                "name": "Skeleton",
+                "code": "skeleton",
+                "level": 18,
+                "hp": 480,
+                "attack_fire": 26,
+                "attack_earth": 18,
+                "attack_water": 0,
+                "attack_air": 0,
+                "res_fire": 30,
+                "res_earth": 0,
+                "res_water": -10,
+                "res_air": -10,
+                "min_gold": 0,
+                "max_gold": 3,
+                "drops": [
+                    {
+                        "code": "skeleton_bone",
+                        "rate": 16,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "skeleton_skull",
+                        "rate": 30,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    8,
+                    6
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723540902.2927318
+        },
+        "pig": {
+            "data": {
+                "name": "Pig",
+                "code": "pig",
+                "level": 19,
+                "hp": 480,
+                "attack_fire": 0,
+                "attack_earth": 0,
+                "attack_water": 40,
+                "attack_air": 0,
+                "res_fire": 0,
+                "res_earth": -10,
+                "res_water": 40,
+                "res_air": 0,
+                "min_gold": 0,
+                "max_gold": 4,
+                "drops": [
+                    {
+                        "code": "pig_skin",
+                        "rate": 16,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    -3,
+                    -3
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723540904.189433
+        },
+        "pig_skin": {
+            "data": {
+                "name": "Pig Skin",
+                "code": "pig_skin",
+                "level": 20,
+                "type": "resource",
+                "subtype": "mob",
+                "description": "",
+                "effects": [],
+                "craft": null,
+                "location": [
+                    -3,
+                    -3
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723540904.8270018
+        },
         "gold_rocks": {
             "data": {
-                "name": "Forest",
-                "skin": "forest_goldore1",
-                "x": 10,
-                "y": -4,
-                "content": {
-                    "type": "resource",
-                    "code": "gold_rocks"
-                },
+                "name": "Gold Rocks",
                 "code": "gold_rocks",
+                "skill": "mining",
+                "level": 30,
+                "drops": [
+                    {
+                        "code": "gold_ore",
+                        "rate": 1,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "topaz",
+                        "rate": 5000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "emerald",
+                        "rate": 5000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "ruby",
+                        "rate": 5000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "sapphire",
+                        "rate": 5000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
                 "location": [
                     10,
                     -4
                 ],
                 "need_craft": null,
-                "for_work": null
+                "for_work": "mining"
             },
-            "last_update": 1723514860.0853822
+            "last_update": 1723540907.3338366
         },
-        "ash_tree": {
+        "gold_ore": {
             "data": {
-                "name": "Forest",
-                "skin": "forest_ashtree2",
-                "x": -1,
-                "y": 0,
-                "content": {
-                    "type": "resource",
-                    "code": "ash_tree"
-                },
-                "code": "ash_tree",
+                "name": "Gold ore",
+                "code": "gold_ore",
+                "level": 30,
+                "type": "resource",
+                "subtype": "mining",
+                "description": "",
+                "effects": [],
+                "craft": null,
                 "location": [
-                    -1,
-                    0
+                    10,
+                    -4
                 ],
                 "need_craft": null,
-                "for_work": null
+                "for_work": "mining"
             },
-            "last_update": 1723514861.9182653
-        },
-        "copper_rocks": {
-            "data": {
-                "name": "Forest",
-                "skin": "forest_copperore1",
-                "x": 2,
-                "y": 0,
-                "content": {
-                    "type": "resource",
-                    "code": "copper_rocks"
-                },
-                "code": "copper_rocks",
-                "location": [
-                    2,
-                    0
-                ],
-                "need_craft": null,
-                "for_work": null
-            },
-            "last_update": 1723514863.8017259
-        },
-        "gudgeon_fishing_spot": {
-            "data": {
-                "name": "Lake",
-                "skin": "forest_lake3",
-                "x": 4,
-                "y": 2,
-                "content": {
-                    "type": "resource",
-                    "code": "gudgeon_fishing_spot"
-                },
-                "code": "gudgeon_fishing_spot",
-                "location": [
-                    4,
-                    2
-                ],
-                "need_craft": null,
-                "for_work": null
-            },
-            "last_update": 1723514865.6925938
-        },
-        "shrimp_fishing_spot": {
-            "data": {
-                "name": "Lake",
-                "skin": "forest_lake4",
-                "x": 5,
-                "y": 2,
-                "content": {
-                    "type": "resource",
-                    "code": "shrimp_fishing_spot"
-                },
-                "code": "shrimp_fishing_spot",
-                "location": [
-                    5,
-                    2
-                ],
-                "need_craft": null,
-                "for_work": null
-            },
-            "last_update": 1723514867.5745366
-        },
-        "spruce_tree": {
-            "data": {
-                "name": "Forest",
-                "skin": "forest_sprucetree1",
-                "x": -2,
-                "y": 5,
-                "content": {
-                    "type": "resource",
-                    "code": "spruce_tree"
-                },
-                "code": "spruce_tree",
-                "location": [
-                    -2,
-                    5
-                ],
-                "need_craft": null,
-                "for_work": null
-            },
-            "last_update": 1723514869.4316921
-        },
-        "birch_tree": {
-            "data": {
-                "name": "Forest",
-                "skin": "forest_birchtree2",
-                "x": 3,
-                "y": 5,
-                "content": {
-                    "type": "resource",
-                    "code": "birch_tree"
-                },
-                "code": "birch_tree",
-                "location": [
-                    3,
-                    5
-                ],
-                "need_craft": null,
-                "for_work": null
-            },
-            "last_update": 1723514872.5720227
-        },
-        "bass_fishing_spot": {
-            "data": {
-                "name": "Lake",
-                "skin": "forest_lake1",
-                "x": -3,
-                "y": 6,
-                "content": {
-                    "type": "resource",
-                    "code": "bass_fishing_spot"
-                },
-                "code": "bass_fishing_spot",
-                "location": [
-                    -3,
-                    6
-                ],
-                "need_craft": null,
-                "for_work": null
-            },
-            "last_update": 1723514874.405635
-        },
-        "trout_fishing_spot": {
-            "data": {
-                "name": "Lake",
-                "skin": "forest_lake2",
-                "x": -2,
-                "y": 6,
-                "content": {
-                    "type": "resource",
-                    "code": "trout_fishing_spot"
-                },
-                "code": "trout_fishing_spot",
-                "location": [
-                    -2,
-                    6
-                ],
-                "need_craft": null,
-                "for_work": null
-            },
-            "last_update": 1723514876.2736337
-        },
-        "coal_rocks": {
-            "data": {
-                "name": "Forest",
-                "skin": "forest_coal1",
-                "x": 1,
-                "y": 6,
-                "content": {
-                    "type": "resource",
-                    "code": "coal_rocks"
-                },
-                "code": "coal_rocks",
-                "location": [
-                    1,
-                    6
-                ],
-                "need_craft": null,
-                "for_work": null
-            },
-            "last_update": 1723514878.1416934
-        },
-        "iron_rocks": {
-            "data": {
-                "name": "Forest",
-                "skin": "forest_ironore1",
-                "x": 1,
-                "y": 7,
-                "content": {
-                    "type": "resource",
-                    "code": "iron_rocks"
-                },
-                "code": "iron_rocks",
-                "location": [
-                    1,
-                    7
-                ],
-                "need_craft": null,
-                "for_work": null
-            },
-            "last_update": 1723514880.0124755
-        },
-        "dead_tree": {
-            "data": {
-                "name": "Graveyard",
-                "skin": "forest_skeleton8",
-                "x": 9,
-                "y": 8,
-                "content": {
-                    "type": "resource",
-                    "code": "dead_tree"
-                },
-                "code": "dead_tree",
-                "location": [
-                    9,
-                    8
-                ],
-                "need_craft": null,
-                "for_work": null
-            },
-            "last_update": 1723514881.8914304
+            "last_update": 1723540937.410527
         }
     }
 }

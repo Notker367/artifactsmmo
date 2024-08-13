@@ -50,6 +50,18 @@ def get_monster(code):
 
     return response
 
+def get_resource(code):
+    """
+
+    :param code: The code of the resource.
+    :return: response
+    """
+
+    url = f"https://api.artifactsmmo.com/resources/{code}"
+
+    response = requests.get(url)
+
+    return response
 
 def get_all_maps(content_type, content_code=None, page=1, size=100 ):
     """
@@ -69,7 +81,7 @@ def get_all_maps(content_type, content_code=None, page=1, size=100 ):
         'page'         : page,
         'size'         : size
     }
-    print('!!!!!!', data)
+    print('get_all_maps', data)
     response = requests.get(url, params=data)
 
     if response.json()['total'] >= size and response.status_code == 200:

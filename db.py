@@ -58,6 +58,7 @@ famous_monsters = [
     'flying_serpent',
     'wolf',
     'skeleton',
+    'pig'
 ]
 
 famous_spots = [
