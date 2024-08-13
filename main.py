@@ -68,7 +68,7 @@ async def task2(character_name):
     works_dict = db.works_dict                          # {skill : func}
     my_task = tasks_manager.get_task(character_name)    # ('code', 'quantity')
     if my_task:
-        target = my_task['code']
+        target = my_task[0]
         info = cache_manager.check_in_cache(target)
         need_work = info['for_work']
 
@@ -77,7 +77,7 @@ async def task2(character_name):
         await work_function(character_name, my_task)
 
     else:
-        await task(character_name)
+        tasks_manager.add_default_task_board(character_name)
 
 # Основная задача для персонажа
 async def task(character_name):
@@ -137,9 +137,9 @@ async def task(character_name):
 # Список персонажей
 characters = [
     char_I,
-    char_II,
-    char_III,
-    char_IV,
+#    char_II,
+#    char_III,
+#    char_IV,
     char_V
 ]
 

@@ -6,7 +6,7 @@ import tasks_manager
 from main import wait_cooldown_from_response
 
 # Обработка ответов при работе
-async def response_processing(character_name, response):
+async def response_processing(character_name, response, task=None):
     if response.status_code == 200:
         await wait_cooldown_from_response(character_name)
         return True
@@ -16,12 +16,19 @@ async def response_processing(character_name, response):
         await all_in_bank(character_name)
         print(f"{character_name} - all_in_bank completed")
 
+    elif response.status_code == 499:
+        await wait_cooldown_from_response(character_name)
+
+    elif response.status_code == 598 and task is not None:
+        await task_craft(character_name, task)
+        return
+
     else:
         print(response.json()['error'])
 
     return
 
-async def complete_check(character_name,task, left=False):
+async def complete_check(character_name,task):
     in_inv = info.get_item_dict(character_name)
     item_name, quantity  = task[0],task[1]
 
@@ -30,13 +37,20 @@ async def complete_check(character_name,task, left=False):
     else:
         left = quantity
 
-    if left:
-        return left
-
     if left > 0:
         return False
     else:
         return True
+
+async def complete_check_get_left(character_name,task):
+    in_inv = info.get_item_dict(character_name)
+    item_name, quantity  = task[0], task[1]
+
+    if item_name in list(in_inv.keys()):
+        left = quantity - in_inv[item_name]
+    else:
+        left = quantity + 0
+    return left
 
 
 
@@ -175,7 +189,7 @@ async def task_craft(character_name, task):
 
         # check inv
         # create new task
-    quantity = complete_check(character_name,task,left=True)
+    quantity = await complete_check_get_left(character_name,task)
     tasks_manager.add_to_task_board(target,quantity=quantity)
     await all_in_bank(character_name)
 
@@ -343,7 +357,7 @@ async def task_farm(character_name, task):
     await go_to(location, character_name)
 
     complete = False
-    while complete:
+    while not complete:
 
         response = action.fight(character_name, debug=False)
 
@@ -354,10 +368,10 @@ async def task_farm(character_name, task):
             # check inv
             # create new task
         else:
-            print(f"ERROR task_gathering {character_name, task}")
+            print(f"ERROR task_farm {character_name, task}")
             complete = True
 
-    quantity = complete_check(character_name,task,left=True)
+    quantity = await complete_check_get_left(character_name,task)
     tasks_manager.add_to_task_board(target,quantity=quantity)
     await all_in_bank(character_name)
 
@@ -431,19 +445,19 @@ async def task_gathering(character_name, task):
     await go_to(location, character_name)
 
     complete = False
-    while complete:
+    while not complete:
         response = action.gathering(character_name)
 
-        ok = await response_processing(character_name, response)
+        ok = await response_processing(character_name, response, task=task)
 
         if ok:
             print(f"{character_name} Gathering code: ok")
-            complete = complete_check(character_name,task)
+            complete = await complete_check(character_name,task)
         else:
             print(f"ERROR task_gathering {character_name, task}")
             complete = True
 
-    quantity = complete_check(character_name,task,left=True)
+    quantity = await complete_check_get_left(character_name,task)
     tasks_manager.add_to_task_board(target,quantity=quantity)
     await all_in_bank(character_name)
             # create new task

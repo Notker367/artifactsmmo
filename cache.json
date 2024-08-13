@@ -528,6 +528,203 @@
                 "for_work": "mining"
             },
             "last_update": 1723584160.3322868
+        },
+        "skeleton_bone": {
+            "data": {
+                "name": "Skeleton Bone",
+                "code": "skeleton_bone",
+                "level": 18,
+                "type": "resource",
+                "subtype": "mob",
+                "description": "",
+                "effects": [],
+                "craft": null,
+                "location": [
+                    8,
+                    6
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723587799.2333627
+        },
+        "cooked_bass": {
+            "data": {
+                "name": "Cooked Bass",
+                "code": "cooked_bass",
+                "level": 30,
+                "type": "consumable",
+                "subtype": "food",
+                "description": "Restores 45HP at the start of the turn if the player has lost more than 50% of his health points.",
+                "effects": [
+                    {
+                        "name": "restore",
+                        "value": 45
+                    }
+                ],
+                "craft": {
+                    "skill": "cooking",
+                    "level": 30,
+                    "items": [
+                        {
+                            "code": "bass",
+                            "quantity": 1
+                        }
+                    ],
+                    "quantity": 1,
+                    "recept": {
+                        "bass": 1
+                    },
+                    "location": [
+                        1,
+                        1
+                    ]
+                },
+                "location": [
+                    4,
+                    1
+                ],
+                "need_craft": true,
+                "for_work": "cooking"
+            },
+            "last_update": 1723585969.699609
+        },
+        "steel": {
+            "data": {
+                "name": "Steel",
+                "code": "steel",
+                "level": 20,
+                "type": "resource",
+                "subtype": "alloy",
+                "description": "",
+                "effects": [],
+                "craft": {
+                    "skill": "mining",
+                    "level": 20,
+                    "items": [
+                        {
+                            "code": "iron_ore",
+                            "quantity": 2
+                        },
+                        {
+                            "code": "coal",
+                            "quantity": 4
+                        }
+                    ],
+                    "quantity": 1,
+                    "recept": {
+                        "iron_ore": 2,
+                        "coal": 4
+                    },
+                    "location": [
+                        1,
+                        5
+                    ]
+                },
+                "location": [
+                    4,
+                    1
+                ],
+                "need_craft": true,
+                "for_work": "mining"
+            },
+            "last_update": 1723585970.858606
+        },
+        "mushroom": {
+            "data": {
+                "name": "Mushroom",
+                "code": "mushroom",
+                "level": 10,
+                "type": "resource",
+                "subtype": "mob",
+                "description": "",
+                "effects": [],
+                "craft": null,
+                "location": [
+                    5,
+                    3
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723585971.5986054
+        },
+        "hardwood_plank": {
+            "data": {
+                "name": "Hardwood Plank",
+                "code": "hardwood_plank",
+                "level": 20,
+                "type": "resource",
+                "subtype": "plank",
+                "description": "",
+                "effects": [],
+                "craft": {
+                    "skill": "woodcutting",
+                    "level": 20,
+                    "items": [
+                        {
+                            "code": "ash_wood",
+                            "quantity": 2
+                        },
+                        {
+                            "code": "birch_wood",
+                            "quantity": 4
+                        }
+                    ],
+                    "quantity": 1,
+                    "recept": {
+                        "ash_wood": 2,
+                        "birch_wood": 4
+                    },
+                    "location": [
+                        -2,
+                        -3
+                    ]
+                },
+                "location": [
+                    4,
+                    1
+                ],
+                "need_craft": true,
+                "for_work": "woodcutting"
+            },
+            "last_update": 1723589321.1621737
+        },
+        "spruce_plank": {
+            "data": {
+                "name": "Spruce Plank",
+                "code": "spruce_plank",
+                "level": 10,
+                "type": "resource",
+                "subtype": "plank",
+                "description": "",
+                "effects": [],
+                "craft": {
+                    "skill": "woodcutting",
+                    "level": 10,
+                    "items": [
+                        {
+                            "code": "spruce_wood",
+                            "quantity": 6
+                        }
+                    ],
+                    "quantity": 1,
+                    "recept": {
+                        "spruce_wood": 6
+                    },
+                    "location": [
+                        -2,
+                        -3
+                    ]
+                },
+                "location": [
+                    4,
+                    1
+                ],
+                "need_craft": true,
+                "for_work": "woodcutting"
+            },
+            "last_update": 1723588208.274255
         }
     }
 }

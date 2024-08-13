@@ -109,7 +109,6 @@ def about(target):
     :param target: 'code' (name item or mob)
     :return: dict {name : info from data.item or data}
     """
-    print('!!!!!!! about ', target)
     response = api.world_info.get_item_info(target) # item
     if response.status_code == 200:
         data = response.json()['data']['item']
