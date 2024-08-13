@@ -21,6 +21,23 @@ async def response_processing(character_name, response):
 
     return
 
+async def complete_check(character_name,task, left=False):
+    in_inv = info.get_item_dict(character_name)
+    item_name, quantity  = task[0],task[1]
+
+    if item_name in list(in_inv.keys()):
+        left = quantity - in_inv[item_name]
+    else:
+        left = quantity
+
+    if left:
+        return left
+
+    if left > 0:
+        return False
+    else:
+        return True
+
 
 
 # Функция перемещения персонажа к указанным координатам
@@ -151,7 +168,6 @@ async def task_craft(character_name, task):
 
     if ok:
         print(f"{character_name} {complete_action} code: {response.status_code} {complete_action} {can_craft} {target}")
-        await all_in_bank(character_name)
     else:
         for needed_item in recept_name_list:
             print(
@@ -159,6 +175,10 @@ async def task_craft(character_name, task):
 
         # check inv
         # create new task
+    quantity = complete_check(character_name,task,left=True)
+    tasks_manager.add_to_task_board(target,quantity=quantity)
+    await all_in_bank(character_name)
+
 
 
 
@@ -322,14 +342,24 @@ async def task_farm(character_name, task):
 
     await go_to(location, character_name)
 
-    response = action.fight(character_name, debug=False)
+    complete = False
+    while complete:
 
-    ok = await response_processing(character_name, response)
+        response = action.fight(character_name, debug=False)
 
-    if ok:
-        print(f"{character_name} Fight code: ok")
-        # check inv
-        # create new task
+        ok = await response_processing(character_name, response)
+
+        if ok:
+            print(f"{character_name} Fight code: ok")
+            # check inv
+            # create new task
+        else:
+            print(f"ERROR task_gathering {character_name, task}")
+            complete = True
+
+    quantity = complete_check(character_name,task,left=True)
+    tasks_manager.add_to_task_board(target,quantity=quantity)
+    await all_in_bank(character_name)
 
 
 #Добыча
@@ -393,7 +423,6 @@ async def gathering(character_name, target):
         print(response.json()['error'])
 
 async def task_gathering(character_name, task):
-    #
     target = task[0]
     target_info = cache_manager.check_in_cache(target)
     location = target_info['location']  # get_monster_info[]
@@ -401,14 +430,23 @@ async def task_gathering(character_name, task):
 
     await go_to(location, character_name)
 
-    response = action.gathering(character_name)
+    complete = False
+    while complete:
+        response = action.gathering(character_name)
 
-    ok = await response_processing(character_name, response)
+        ok = await response_processing(character_name, response)
 
-    if ok:
-        print(f"{character_name} Gathering code: ok")
-        # check inv
-        # create new task
+        if ok:
+            print(f"{character_name} Gathering code: ok")
+            complete = complete_check(character_name,task)
+        else:
+            print(f"ERROR task_gathering {character_name, task}")
+            complete = True
+
+    quantity = complete_check(character_name,task,left=True)
+    tasks_manager.add_to_task_board(target,quantity=quantity)
+    await all_in_bank(character_name)
+            # create new task
 
 
 

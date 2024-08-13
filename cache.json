@@ -461,7 +461,7 @@
                 "need_craft": null,
                 "for_work": "fighting"
             },
-            "last_update": 1723540904.8270018
+            "last_update": 1723584159.5772872
         },
         "gold_rocks": {
             "data": {
@@ -527,7 +527,7 @@
                 "need_craft": null,
                 "for_work": "mining"
             },
-            "last_update": 1723540937.410527
+            "last_update": 1723584160.3322868
         }
     }
 }

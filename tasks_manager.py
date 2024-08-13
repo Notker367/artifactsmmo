@@ -1,16 +1,10 @@
 import db
 import info
 import cache_manager
-from db import char_I, char_II, char_III, char_IV, char_V,char_professions
 
 task_dict = {
 #    char_N    : [('code', 'quantity'),('str', 'int')],
 
-    char_I    : [],
-    char_II   : [],
-    char_III  : [],
-    char_IV   : [],
-    char_V    : [],
 }
 task_board= {
 #   'skill' : [task, task, task],
@@ -23,9 +17,16 @@ default_tasks = {
 }
 
 def add_to_task_board(target_code, quantity=1, non_stop=False):
+    if non_stop:
+        quantity = 999
+    elif quantity <= 0:
+        return
     skill = cache_manager.check_in_cache(target_code)['for_work']
     task = (target_code, quantity)
     task_board[skill] = [task] + task_board.get(skill, [])
+    print('_____________TASKS IN BOARD_____________')
+    for prof in list(task_board.keys()):
+        print(f"{prof} - {task_board[prof]}")
 
 
 def get_task(character_name):
@@ -34,9 +35,11 @@ def get_task(character_name):
     :param character_name:
     :return: task ('code', 'quantity') or False
     """
+    from db import char_professions
+
     my_professions = char_professions[character_name]     #   'char_': ['profession', 'profession', 'profession']
     for profession in my_professions:
-        skill = db.char_professions[profession]
+        skill = char_professions[profession]
         have_tasks = task_board[skill]
         if not have_tasks:
             continue                                # default case

@@ -151,7 +151,7 @@ async def main():
     while True:
         for character in characters:
             if character not in tasks or tasks[character].done():
-                tasks[character] = asyncio.create_task(task(character))
+                tasks[character] = asyncio.create_task(task2(character))
         await asyncio.sleep(1)  # Маленькая задержка, чтобы не перегружать цикл
 
 if __name__ == "__main__":
