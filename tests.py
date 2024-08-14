@@ -23,7 +23,6 @@ def test_cooldown():
 #def test_map_info():
 
 def test_tasks():
-    x = cache_manager.check_in_cache('pig_skin')
-    x = cache_manager.check_in_cache('gold_ore')
+    x = cache_manager.check_in_cache('mushmush_wizard_hat')
     print(x)
     print(tasks_manager.task_board)

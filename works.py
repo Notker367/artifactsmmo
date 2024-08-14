@@ -6,9 +6,11 @@ import tasks_manager
 from main import wait_cooldown_from_response
 
 # Обработка ответов при работе
-async def response_processing(character_name, response, task=None):
+async def response_processing(character_name, response, get_response_code=False):
     if response.status_code == 200:
         await wait_cooldown_from_response(character_name)
+        if get_response_code:
+            return True, response.status_code
         return True
 
     elif response.status_code == 497:
@@ -19,14 +21,16 @@ async def response_processing(character_name, response, task=None):
     elif response.status_code == 499:
         await wait_cooldown_from_response(character_name)
 
-    elif response.status_code == 598 and task is not None:
-        await task_craft(character_name, task)
-        return
+    elif response.status_code == 598:
+        # not in map
+        pass
 
     else:
         print(response.json()['error'])
 
-    return
+    if get_response_code:
+        return False, response.status_code
+    return False
 
 async def complete_check(character_name,task):
     in_inv = info.get_item_dict(character_name)
@@ -445,21 +449,28 @@ async def task_gathering(character_name, task):
     await go_to(location, character_name)
 
     complete = False
+    status_code = 111
     while not complete:
         response = action.gathering(character_name)
 
-        ok = await response_processing(character_name, response, task=task)
+        ok, status_code = await response_processing(character_name, response, get_response_code=True)
 
         if ok:
             print(f"{character_name} Gathering code: ok")
             complete = await complete_check(character_name,task)
+
         else:
             print(f"ERROR task_gathering {character_name, task}")
             complete = True
 
-    quantity = await complete_check_get_left(character_name,task)
-    tasks_manager.add_to_task_board(target,quantity=quantity)
-    await all_in_bank(character_name)
+    if status_code == 598:
+        quantity = await complete_check_get_left(character_name, task)
+        tasks_manager.add_to_task_board(target, quantity=quantity)
+        await task_craft(character_name, task)
+    else:
+        quantity = await complete_check_get_left(character_name,task)
+        tasks_manager.add_to_task_board(target,quantity=quantity)
+        await all_in_bank(character_name)
             # create new task
 
 

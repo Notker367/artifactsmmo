@@ -1,8 +1,6 @@
 import json
 import os
 import time
-import requests
-
 import info
 
 CACHE_FILE = "cache.json"  # Имя файла для хранения кэша

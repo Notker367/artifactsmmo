@@ -21,10 +21,22 @@
         "skeleton_skull_drop": "skeleton",
         "pig_skin_drop": "pig",
         "gold_ore_drop": "gold_rocks",
-        "topaz_drop": "gold_rocks",
-        "emerald_drop": "gold_rocks",
-        "ruby_drop": "gold_rocks",
-        "sapphire_drop": "gold_rocks"
+        "topaz_drop": "coal_rocks",
+        "emerald_drop": "coal_rocks",
+        "ruby_drop": "iron_rocks",
+        "sapphire_drop": "iron_rocks",
+        "ash_wood_drop": "ash_tree",
+        "copper_ore_drop": "copper_rocks",
+        "gudgeon_drop": "gudgeon_fishing_spot",
+        "shrimp_drop": "shrimp_fishing_spot",
+        "golden_shrimp_drop": "shrimp_fishing_spot",
+        "spruce_wood_drop": "spruce_tree",
+        "birch_wood_drop": "birch_tree",
+        "bass_drop": "bass_fishing_spot",
+        "trout_drop": "trout_fishing_spot",
+        "coal_drop": "coal_rocks",
+        "iron_ore_drop": "iron_rocks",
+        "dead_wood_drop": "dead_tree"
     },
     "dynamic_data": {
         "chicken": {
@@ -546,7 +558,7 @@
                 "need_craft": null,
                 "for_work": "fighting"
             },
-            "last_update": 1723587799.2333627
+            "last_update": 1723596114.125615
         },
         "cooked_bass": {
             "data": {
@@ -587,7 +599,7 @@
                 "need_craft": true,
                 "for_work": "cooking"
             },
-            "last_update": 1723585969.699609
+            "last_update": 1723596115.2106135
         },
         "steel": {
             "data": {
@@ -628,7 +640,7 @@
                 "need_craft": true,
                 "for_work": "mining"
             },
-            "last_update": 1723585970.858606
+            "last_update": 1723595303.122603
         },
         "mushroom": {
             "data": {
@@ -688,7 +700,7 @@
                 "need_craft": true,
                 "for_work": "woodcutting"
             },
-            "last_update": 1723589321.1621737
+            "last_update": 1723596118.9616072
         },
         "spruce_plank": {
             "data": {
@@ -725,6 +737,472 @@
                 "for_work": "woodcutting"
             },
             "last_update": 1723588208.274255
+        },
+        "ash_tree": {
+            "data": {
+                "name": "Ash Tree",
+                "code": "ash_tree",
+                "skill": "woodcutting",
+                "level": 1,
+                "drops": [
+                    {
+                        "code": "ash_wood",
+                        "rate": 1,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    -1,
+                    0
+                ],
+                "need_craft": null,
+                "for_work": "woodcutting"
+            },
+            "last_update": 1723590022.9050372
+        },
+        "copper_rocks": {
+            "data": {
+                "name": "Copper Rocks",
+                "code": "copper_rocks",
+                "skill": "mining",
+                "level": 1,
+                "drops": [
+                    {
+                        "code": "copper_ore",
+                        "rate": 1,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "topaz",
+                        "rate": 10000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "emerald",
+                        "rate": 10000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    2,
+                    0
+                ],
+                "need_craft": null,
+                "for_work": "mining"
+            },
+            "last_update": 1723590024.9220335
+        },
+        "gudgeon_fishing_spot": {
+            "data": {
+                "name": "Gudgeon Fishing Spot",
+                "code": "gudgeon_fishing_spot",
+                "skill": "fishing",
+                "level": 1,
+                "drops": [
+                    {
+                        "code": "gudgeon",
+                        "rate": 3,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    4,
+                    2
+                ],
+                "need_craft": null,
+                "for_work": "fishing"
+            },
+            "last_update": 1723590026.467031
+        },
+        "shrimp_fishing_spot": {
+            "data": {
+                "name": "Shrimp Fishing Spot",
+                "code": "shrimp_fishing_spot",
+                "skill": "fishing",
+                "level": 10,
+                "drops": [
+                    {
+                        "code": "shrimp",
+                        "rate": 3,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "golden_shrimp",
+                        "rate": 5000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    5,
+                    2
+                ],
+                "need_craft": null,
+                "for_work": "fishing"
+            },
+            "last_update": 1723590027.9460297
+        },
+        "spruce_tree": {
+            "data": {
+                "name": "Spruce Tree",
+                "code": "spruce_tree",
+                "skill": "woodcutting",
+                "level": 10,
+                "drops": [
+                    {
+                        "code": "spruce_wood",
+                        "rate": 1,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    -2,
+                    5
+                ],
+                "need_craft": null,
+                "for_work": "woodcutting"
+            },
+            "last_update": 1723590029.4580274
+        },
+        "birch_tree": {
+            "data": {
+                "name": "Birch Tree",
+                "code": "birch_tree",
+                "skill": "woodcutting",
+                "level": 20,
+                "drops": [
+                    {
+                        "code": "birch_wood",
+                        "rate": 1,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    3,
+                    5
+                ],
+                "need_craft": null,
+                "for_work": "woodcutting"
+            },
+            "last_update": 1723590030.9420252
+        },
+        "bass_fishing_spot": {
+            "data": {
+                "name": "Bass Fishing Spot",
+                "code": "bass_fishing_spot",
+                "skill": "fishing",
+                "level": 30,
+                "drops": [
+                    {
+                        "code": "bass",
+                        "rate": 3,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    -3,
+                    6
+                ],
+                "need_craft": null,
+                "for_work": "fishing"
+            },
+            "last_update": 1723590032.8920228
+        },
+        "trout_fishing_spot": {
+            "data": {
+                "name": "Trout Fishing Spot",
+                "code": "trout_fishing_spot",
+                "skill": "fishing",
+                "level": 20,
+                "drops": [
+                    {
+                        "code": "trout",
+                        "rate": 3,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    -2,
+                    6
+                ],
+                "need_craft": null,
+                "for_work": "fishing"
+            },
+            "last_update": 1723590034.4770198
+        },
+        "coal_rocks": {
+            "data": {
+                "name": "Coal Rocks",
+                "code": "coal_rocks",
+                "skill": "mining",
+                "level": 20,
+                "drops": [
+                    {
+                        "code": "coal",
+                        "rate": 1,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "topaz",
+                        "rate": 10000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "emerald",
+                        "rate": 10000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "ruby",
+                        "rate": 10000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "sapphire",
+                        "rate": 10000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    1,
+                    6
+                ],
+                "need_craft": null,
+                "for_work": "mining"
+            },
+            "last_update": 1723590036.3580172
+        },
+        "iron_rocks": {
+            "data": {
+                "name": "Iron Rocks",
+                "code": "iron_rocks",
+                "skill": "mining",
+                "level": 10,
+                "drops": [
+                    {
+                        "code": "iron_ore",
+                        "rate": 1,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "ruby",
+                        "rate": 10000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    },
+                    {
+                        "code": "sapphire",
+                        "rate": 10000,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    1,
+                    7
+                ],
+                "need_craft": null,
+                "for_work": "mining"
+            },
+            "last_update": 1723590037.9310153
+        },
+        "dead_tree": {
+            "data": {
+                "name": "Dead Tree",
+                "code": "dead_tree",
+                "skill": "woodcutting",
+                "level": 30,
+                "drops": [
+                    {
+                        "code": "dead_wood",
+                        "rate": 1,
+                        "min_quantity": 1,
+                        "max_quantity": 1
+                    }
+                ],
+                "location": [
+                    9,
+                    8
+                ],
+                "need_craft": null,
+                "for_work": "woodcutting"
+            },
+            "last_update": 1723590039.4270132
+        },
+        "bass": {
+            "data": {
+                "name": "Bass",
+                "code": "bass",
+                "level": 30,
+                "type": "resource",
+                "subtype": "fishing",
+                "description": "",
+                "effects": [],
+                "craft": null,
+                "location": [
+                    -3,
+                    6
+                ],
+                "need_craft": null,
+                "for_work": "fishing"
+            },
+            "last_update": 1723596357.4539368
+        },
+        "ash_wood": {
+            "data": {
+                "name": "Ash Wood",
+                "code": "ash_wood",
+                "level": 1,
+                "type": "resource",
+                "subtype": "woodcutting",
+                "description": "",
+                "effects": [],
+                "craft": null,
+                "location": [
+                    -1,
+                    0
+                ],
+                "need_craft": null,
+                "for_work": "woodcutting"
+            },
+            "last_update": 1723594461.8302004
+        },
+        "mushmush_wizard_hat": {
+            "data": {
+                "name": "Mushmush Wizard Hat",
+                "code": "mushmush_wizard_hat",
+                "level": 15,
+                "type": "helmet",
+                "subtype": "",
+                "description": "",
+                "effects": [
+                    {
+                        "name": "dmg_fire",
+                        "value": 10
+                    },
+                    {
+                        "name": "dmg_earth",
+                        "value": 10
+                    },
+                    {
+                        "name": "hp",
+                        "value": 60
+                    }
+                ],
+                "craft": {
+                    "skill": "gearcrafting",
+                    "level": 15,
+                    "items": [
+                        {
+                            "code": "cowhide",
+                            "quantity": 5
+                        },
+                        {
+                            "code": "feather",
+                            "quantity": 3
+                        },
+                        {
+                            "code": "wolf_hair",
+                            "quantity": 1
+                        },
+                        {
+                            "code": "mushroom",
+                            "quantity": 5
+                        }
+                    ],
+                    "quantity": 1,
+                    "recept": {
+                        "cowhide": 5,
+                        "feather": 3,
+                        "wolf_hair": 1,
+                        "mushroom": 5
+                    },
+                    "location": [
+                        3,
+                        1
+                    ]
+                },
+                "location": [
+                    4,
+                    1
+                ],
+                "need_craft": true,
+                "for_work": "gearcrafting"
+            },
+            "last_update": 1723595837.8337498
+        },
+        "birch_wood": {
+            "data": {
+                "name": "Birch Wood",
+                "code": "birch_wood",
+                "level": 20,
+                "type": "resource",
+                "subtype": "woodcutting",
+                "description": "",
+                "effects": [],
+                "craft": null,
+                "location": [
+                    3,
+                    5
+                ],
+                "need_craft": null,
+                "for_work": "woodcutting"
+            },
+            "last_update": 1723596234.9584444
+        },
+        "feather": {
+            "data": {
+                "name": "Feather",
+                "code": "feather",
+                "level": 1,
+                "type": "resource",
+                "subtype": "mob",
+                "description": "",
+                "effects": [],
+                "craft": null,
+                "location": [
+                    0,
+                    1
+                ],
+                "need_craft": null,
+                "for_work": "fighting"
+            },
+            "last_update": 1723595966.6395712
+        },
+        "iron_ore": {
+            "data": {
+                "name": "Iron Ore",
+                "code": "iron_ore",
+                "level": 10,
+                "type": "resource",
+                "subtype": "mining",
+                "description": "",
+                "effects": [],
+                "craft": null,
+                "location": [
+                    1,
+                    7
+                ],
+                "need_craft": null,
+                "for_work": "mining"
+            },
+            "last_update": 1723595647.3402097
         }
     }
 }
