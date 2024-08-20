@@ -298,18 +298,29 @@ def get_bank_items(items_list):
     """
     items_dict = {}
     for item_name in items_list:
-        response = api.world_info.get_bank_items(item_code=item_name).json()
+        response = api.world_info.get_bank_items(item_code=item_name)
+        response_data = response.json()
 #        data = response['data']
 
-        if "error" in response:
+        if response.status_code == 200:
+            quantity = response_data['data'][0]['quantity']
+            print(f"get_bank_items in bank {quantity} {item_name}")
+
+            if response_data['total'] > response_data['size']:
+                print(f"WARNING - size in get_bank_items !!!")
+
+        elif response.status_code == 404:
+            print(f"get_bank_items 0 {item_name}")
+            quantity = 0
+
+        else :
             print(f"WARNING get_bank_items for {item_name}"
-                  f"{response}" )
-            return {'code': item_name, 'quantity': 0}
+                  f" {response_data}" )
+            return
 
-        if response['total'] > response['size']:
-            print(f"WARNING - size in get_bank_items !!!")
 
-        quantity = response['data'][0]['quantity']
+
+
         items_dict[item_name] = quantity
 
     return items_dict

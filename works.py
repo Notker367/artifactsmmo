@@ -32,19 +32,16 @@ async def response_processing(character_name, response, get_response_code=False)
         return False, response.status_code
     return False
 
-async def complete_check(character_name,task):
+async def complete_check(character_name, task):
     in_inv = info.get_item_dict(character_name)
-    item_name, quantity  = task[0],task[1]
+    item_name, quantity = task[0], task[1]
 
     if item_name in list(in_inv.keys()):
         left = quantity - in_inv[item_name]
     else:
         left = quantity
 
-    if left > 0:
-        return False
-    else:
-        return True
+    return left <= 0
 
 async def complete_check_get_left(character_name,task):
     in_inv = info.get_item_dict(character_name)
@@ -57,6 +54,28 @@ async def complete_check_get_left(character_name,task):
     return left
 
 
+async def ending_work(character_name, target, task, sub_task_list=None):
+    # Проверка остатка по задаче
+    quantity_left = await complete_check_get_left(character_name, task)
+
+    if quantity_left > 0:
+        tasks_manager.add_to_task_board(target, quantity=quantity_left, character_name=character_name)
+    else:
+        print(f"{character_name} has completed {task}.")
+
+    if sub_task_list:
+        print(f'{character_name} needs {sub_task_list} for {target}')
+        tasks_manager.add_tasks_to_tasks_board(sub_task_list, character_name)
+
+    await all_in_bank(character_name)
+
+"""async def ending_work(character_name, target, task, sub_task_list = None):
+    quantity = await complete_check_get_left(character_name, task)
+    tasks_manager.add_to_task_board(target, quantity=quantity,character_name=character_name)
+    if sub_task_list is not None:
+        print(f'{character_name} need {sub_task_list} for {target}')
+        tasks_manager.add_tasks_to_tasks_board(sub_task_list,character_name)
+    await all_in_bank(character_name)"""
 
 # Функция перемещения персонажа к указанным координатам
 async def go_to(coordinates, character_name):
@@ -85,9 +104,13 @@ async def go_to(coordinates, character_name):
 current_count = 30
 recycl=False
 async def all_in_bank(character_name):
-    await go_to((4,1), character_name) # bank
-
     item_dict = info.get_item_dict(character_name)
+
+    if item_dict == {}:
+        print(f'{character_name} inventory is blank')
+        return
+
+    await go_to((4,1), character_name) # bank
 
     for name, quantity in item_dict.items():
         action.deposit_bank(character_name, name, quantity)
@@ -108,50 +131,61 @@ async def task_craft(character_name, task):
     recycl = False
 
     my_item = info.get_item_dict(character_name)
-
     recept_name_list = list(recept.keys())
-
     inv_max = info.get_inventory_max_items(character_name)
-
     can_craft = need_craft
-
-    me_need = {}
+    me_need_from_bank = {}
+    not_have = []
+    min_have_items_for_craft = need_craft
 
     if not recycl:
         bank_item = info.get_bank_items(recept_name_list) # {str : int}
+        print('ssssssssssss', bank_item, recept_name_list)
 
         for item in recept_name_list:
             in_inv = my_item.get(item, 0)
             in_bank = bank_item.get(item, 0)
             in_recept = recept.get(item, 0)
-            me_need = recept.items()
+            me_need_from_bank = recept.items()
 
-            have_items_for_craft = (in_inv + in_bank) // in_recept
-
-            if have_items_for_craft == 0 or need_craft == 0:
-                print(f"{character_name} not can craft {target} needed more {item}")
-                tasks_manager.add_to_task_board(item, need_craft * in_recept)
-                return
+            i_have = in_inv + in_bank
+            have_items_for_craft = i_have // in_recept
 
             if have_items_for_craft < can_craft:
-                can_craft = have_items_for_craft
+                count = (need_craft * in_recept) - i_have
+                print('!!!!!!!!', item, count, need_craft, in_recept, in_inv, in_bank)
+                not_have += [(item,count)]
+                print(f"{character_name} not can craft {target} not have {count} {item}")
+
+            if have_items_for_craft < min_have_items_for_craft:
+                min_have_items_for_craft = have_items_for_craft
+
 
     else:
         item = target
         bank_item = info.get_bank_items([item]) # {str : int}
         in_inv = my_item.get(item, 0)
         in_bank = bank_item.get(item, 0)
-        me_need = [(target, 1)] # Вернется примерно 30% поэтому можно взять х2 предметов
+        me_need_from_bank = [(target, 1)] # Вернется примерно 30% поэтому можно взять х2 предметов
 
         have_items_for_craft = in_inv + in_bank
 
         if have_items_for_craft == 0 or need_craft == 0:
             print(f"{character_name} not can recycl {target} needed more {item}")
             await farm(character_name, target='mushmush')
-            return
+            #return
 
-        if have_items_for_craft < can_craft:
-            can_craft = have_items_for_craft
+    print('aaaaaaaaaaaaaaa', min_have_items_for_craft, can_craft)
+
+    if min_have_items_for_craft < can_craft:
+        can_craft = min_have_items_for_craft
+
+
+    if can_craft <= 0:
+        print(f'WARNING {character_name} task_craft need_craft = 0 {task}')
+        await ending_work(character_name, target, task, sub_task_list=not_have)
+        return
+
 
     need_slots_for_one = 0
 
@@ -163,7 +197,7 @@ async def task_craft(character_name, task):
 
     await all_in_bank(character_name)
 
-    for item, quantity in me_need: # me_need = recept.items() dict_items([('greater_wooden_staff', 50)])
+    for item, quantity in me_need_from_bank: # me_need_from_bank = recept.items() dict_items([('greater_wooden_staff', 50)])
         print(f'{character_name} me need {quantity * can_craft} {item} from bank')
         action.withdraw_bank(character_name, item, quantity * can_craft)
         await wait_cooldown_from_response(character_name)
@@ -175,6 +209,7 @@ async def task_craft(character_name, task):
 
 
     else:
+        print('!!!!!!!!!', character_name, target, can_craft)
         response = action.craft(character_name, target, can_craft)
 
     if recycl:
@@ -193,9 +228,7 @@ async def task_craft(character_name, task):
 
         # check inv
         # create new task
-    quantity = await complete_check_get_left(character_name,task)
-    tasks_manager.add_to_task_board(target,quantity=quantity)
-    await all_in_bank(character_name)
+    await ending_work(character_name, target, task, sub_task_list=not_have)
 
 
 
@@ -375,9 +408,9 @@ async def task_farm(character_name, task):
             print(f"ERROR task_farm {character_name, task}")
             complete = True
 
-    quantity = await complete_check_get_left(character_name,task)
-    tasks_manager.add_to_task_board(target,quantity=quantity)
-    await all_in_bank(character_name)
+
+    await ending_work(character_name, target, task)
+
 
 
 #Добыча
@@ -443,8 +476,15 @@ async def gathering(character_name, target):
 async def task_gathering(character_name, task):
     target = task[0]
     target_info = cache_manager.check_in_cache(target)
-    location = target_info['location']  # get_monster_info[]
+    location = target_info['location']
     work = target_info['for_work']
+    need_craft = target_info['need_craft']
+
+    # Проверка, нужно ли сразу переходить к крафту
+    if need_craft:
+        print(f'{character_name} i do craft {task}')
+        await task_craft(character_name, task)
+        return
 
     await go_to(location, character_name)
 
@@ -453,25 +493,21 @@ async def task_gathering(character_name, task):
     while not complete:
         response = action.gathering(character_name)
 
+        # Обработка ответа от действия `gathering`
         ok, status_code = await response_processing(character_name, response, get_response_code=True)
 
         if ok:
             print(f"{character_name} Gathering code: ok")
-            complete = await complete_check(character_name,task)
+            # Проверка завершения задачи
+            complete = await complete_check(character_name, task)
 
         else:
-            print(f"ERROR task_gathering {character_name, task}")
+            print(f"ERROR task_gathering {character_name, task}, - {status_code}")
             complete = True
 
-    if status_code == 598:
-        quantity = await complete_check_get_left(character_name, task)
-        tasks_manager.add_to_task_board(target, quantity=quantity)
-        await task_craft(character_name, task)
     else:
-        quantity = await complete_check_get_left(character_name,task)
-        tasks_manager.add_to_task_board(target,quantity=quantity)
-        await all_in_bank(character_name)
-            # create new task
+        await ending_work(character_name, target, task)
+
 
 
 
