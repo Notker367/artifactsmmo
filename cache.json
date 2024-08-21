@@ -558,7 +558,7 @@
                 "need_craft": null,
                 "for_work": "fighting"
             },
-            "last_update": 1724150988.8532562
+            "last_update": 1724245799.3185694
         },
         "cooked_bass": {
             "data": {
@@ -599,7 +599,7 @@
                 "need_craft": true,
                 "for_work": "cooking"
             },
-            "last_update": 1724150990.5325258
+            "last_update": 1724252229.2776058
         },
         "steel": {
             "data": {
@@ -640,7 +640,7 @@
                 "need_craft": true,
                 "for_work": "mining"
             },
-            "last_update": 1724150998.7540486
+            "last_update": 1724251577.3975458
         },
         "mushroom": {
             "data": {
@@ -700,7 +700,7 @@
                 "need_craft": true,
                 "for_work": "woodcutting"
             },
-            "last_update": 1724151000.1924736
+            "last_update": 1724251686.623359
         },
         "spruce_plank": {
             "data": {
@@ -1062,7 +1062,7 @@
                 "need_craft": null,
                 "for_work": "fishing"
             },
-            "last_update": 1723642077.0528677
+            "last_update": 1724235811.1684604
         },
         "ash_wood": {
             "data": {
@@ -1081,7 +1081,7 @@
                 "need_craft": null,
                 "for_work": "woodcutting"
             },
-            "last_update": 1724151227.4454753
+            "last_update": 1724235535.6369705
         },
         "mushmush_wizard_hat": {
             "data": {
@@ -1145,7 +1145,7 @@
                 "need_craft": true,
                 "for_work": "gearcrafting"
             },
-            "last_update": 1724150991.9241767
+            "last_update": 1724235356.3482692
         },
         "birch_wood": {
             "data": {
@@ -1202,7 +1202,7 @@
                 "need_craft": null,
                 "for_work": "mining"
             },
-            "last_update": 1724151162.670263
+            "last_update": 1724240669.8199751
         },
         "cowhide": {
             "data": {
@@ -1221,7 +1221,26 @@
                 "need_craft": null,
                 "for_work": "fighting"
             },
-            "last_update": 1724151137.4233024
+            "last_update": 1724245797.6857216
+        },
+        "coal": {
+            "data": {
+                "name": "Coal",
+                "code": "coal",
+                "level": 20,
+                "type": "resource",
+                "subtype": "mining",
+                "description": "",
+                "effects": [],
+                "craft": null,
+                "location": [
+                    1,
+                    6
+                ],
+                "need_craft": null,
+                "for_work": "mining"
+            },
+            "last_update": 1724235374.3243968
         }
     }
 }

@@ -404,6 +404,7 @@ async def task_farm(character_name, task):
             print(f"{character_name} Fight code: ok")
             # check inv
             # create new task
+            #complete = await complete_check(character_name, task)
         else:
             print(f"ERROR task_farm {character_name, task}")
             complete = True

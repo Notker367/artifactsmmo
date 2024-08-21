@@ -119,7 +119,7 @@ async def get_task(character_name):
         skill = professions_dict[profession]
         have_tasks = task_board.get(skill, [])
         my_actual_task += [have_tasks]
-        if not have_tasks or my_last_task[0] ==  have_tasks[0][0]:
+        if not have_tasks or my_last_task[0] ==  have_tasks[0][0]: # and len(my_professions) > 1   if profession != 'Fighter':
             print(f'{character_name} not have new task for {profession}')
             continue                                # default case
 
@@ -132,10 +132,11 @@ async def get_task(character_name):
     return False
 
 async def add_default_task_board(character_name):
-    await get_task(character_name)
-    me_tasks = default_tasks[character_name]
-    for task in me_tasks:
-        add_to_task_board(task[0],task[1],non_stop=True, character_name=character_name)
+    if not await get_task(character_name):
+
+        me_tasks = default_tasks[character_name]
+        for task in me_tasks:
+            add_to_task_board(task[0],task[1],non_stop=True, character_name=character_name)
 
 
 async def add_start_tasks_board():
